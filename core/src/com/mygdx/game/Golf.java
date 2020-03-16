@@ -33,6 +33,8 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereBoxCollisionAlgorithm;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.utils.Array;
 
+import Model.Ball;
+
 public class Golf  implements ApplicationListener {
 	
 	PerspectiveCamera cam;
@@ -58,6 +60,10 @@ public class Golf  implements ApplicationListener {
 	btCollisionConfiguration collisionConfig;
 	btDispatcher dispatcher;
 	
+	Ball golfBall;
+	
+	int fps;
+	
 	public float posX;
 	public float posY;
 	public float posZ;
@@ -68,7 +74,10 @@ public class Golf  implements ApplicationListener {
 	@Override
 	public void create () {
 		Bullet.init();
+		golfBall = new Ball();
 
+		fps = golfBall.fps;
+		
 		modelBatch = new ModelBatch();
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
@@ -113,9 +122,9 @@ public class Golf  implements ApplicationListener {
 		instances.add(ball);
 		
 		for (float j = -5f; j <= 5f; j += 0.3f) {
-			for (float i = 0; i <= 99; i += 0.3f) {
+			for (float i = 0; i <= 199; i += 0.3f) {
 				groundBall = new ModelInstance(model, "groundBalls");
-				groundBall.transform.setToTranslation(i,heightFormula(i,j)-0.25f, j);
+				groundBall.transform.setToTranslation(i,golfBall.get_height(i,j)-0.25f, j);
 				instances.add(groundBall);
 			}
 		}
@@ -141,12 +150,12 @@ public class Golf  implements ApplicationListener {
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		
-		posX = 0;
-		posY = 0;
-		posZ = 2f;
+		golfBall.currentPosX = 0;
+		golfBall.currentPosY = 0;
+		golfBall.currentPosZ = 2f;
 		
-		VX = .2f;
-		VY = 0.01f;
+		golfBall.currentVelX = 3f;
+		golfBall.currentVelY = 0f;
 
 	}
 
@@ -154,21 +163,17 @@ public class Golf  implements ApplicationListener {
 	public void render () {
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
-		if (!collision) {
 			
-			posX += VX;
-			posY += VY;
-			posZ = heightFormula(posX, posY);
+//			posX += VX;
+//			posY += VY;
+			golfBall.NextStep();
+			golfBall.currentPosZ = heightFormula(golfBall.currentPosX*fps, golfBall.currentPosY*fps);
+			System.out.println(golfBall.currentPosZ);
 			
-			ball.transform.translate(VX, -(posZ - heightFormula(posX+VX, posY+VY)), VY);
+			ball.transform.translate(golfBall.currentVelX, (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX*60+golfBall.currentVelX, golfBall.currentPosY*60+golfBall.currentVelY)), golfBall.currentVelY);
 			ballObject.setWorldTransform(ball.transform);
-			
-			
 
-
-			//collision = checkCollision();
-		}
-		cam.position.set(posX - 5f, 5f, 0);
+		cam.position.set(golfBall.currentPosX*fps - 5f, 5f, 0);
 		cam.update();
 		camController.update();
 

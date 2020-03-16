@@ -91,13 +91,13 @@ public class Golf  implements ApplicationListener {
 			.box(5f, 1f, 5f);
 		mb.node().id = "ball";
 		mb.part("sphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.WHITE)))
-			.sphere(2.5f, 2.5f, 2.5f, 10, 10);
+			.sphere(1f, 1f, 1f, 10, 10);
 		mb.node().id = "wall";
 		mb.part("wall",  GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.RED)))
 			.box(5f, 2f, 1f);
 		mb.node().id = "groundBalls";
 		mb.part("sphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.GREEN)))
-		.sphere(0.5f, 0.5f, 0.5f, 10, 10);
+		.sphere(0.5f, 0.5f, 0.5f, 5, 5);
 		model = mb.end();
 
 		// create a modelinstance of the new model
@@ -113,10 +113,10 @@ public class Golf  implements ApplicationListener {
 		instances = new Array<ModelInstance>();
 		instances.add(ball);
 		
-		for (float j = -5f; j <= 5f; j += 0.25f) {
-			for (float i = 0; i <= 99; i += 0.25f) {
+		for (float j = -5f; j <= 5f; j += 0.3f) {
+			for (float i = 0; i <= 99; i += 0.3f) {
 				groundBall = new ModelInstance(model, "groundBalls");
-				groundBall.transform.setToTranslation(i,heightFormula(i,j), j);
+				groundBall.transform.setToTranslation(i-0.25f,heightFormula(i,j)-0.25f, j-0.25f);
 				instances.add(groundBall);
 			}
 		}
@@ -146,8 +146,8 @@ public class Golf  implements ApplicationListener {
 		posY = 0;
 		posZ = 2f;
 		
-		VX = 1f;
-		VY = 0;
+		VX = .2f;
+		VY = .01f;
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class Golf  implements ApplicationListener {
 			posY += VY;
 			posZ = heightFormula(posX, posY);
 			
-			ball.transform.translate(VX, posZ - heightFormula(posX+VX, posY+VY), VY);
+			ball.transform.translate(VX, -(posZ - heightFormula(posX+VX, posY+VY)), VY);
 			ballObject.setWorldTransform(ball.transform);
 			
 			
@@ -168,8 +168,10 @@ public class Golf  implements ApplicationListener {
 
 			//collision = checkCollision();
 		}
-
+		cam.position.set(posX - 5f, 5f, 0);
+		cam.update();
 		camController.update();
+
 
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -236,6 +238,6 @@ public class Golf  implements ApplicationListener {
 	}
 	
 	public static float heightFormula(float x, float y) {
-		return (float)(Math.sin(x));
+		return (float)(Math.sin(x) + Math.pow(Math.abs(y), 1.5));
 	}
 }

@@ -2,7 +2,7 @@ package Model;
 
 public class Ball {
 	
-public static int fps = 60;
+public static int fps = 120;
 	
 public static float stepSize = (float)(1.0/fps);
 	
@@ -31,9 +31,9 @@ public static float stepSize = (float)(1.0/fps);
 	public static float accelerationY;
 	
 	//the variables they require for the import, some not used yet:
-	public static float g = 5.81f;
+	public static float g = 9.81f;
 	public static float m = 45.93f;
-	public static float mu = 0.001f;
+	public static float mu = 0.131f;
 	public static float vmax= 3.0f;
 	public static float tol = 0.02f;
 	

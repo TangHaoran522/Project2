@@ -155,7 +155,7 @@ public class Golf  implements ApplicationListener {
 		golfBall.currentPosZ = 2f;
 		
 		golfBall.currentVelX = 3f;
-		golfBall.currentVelY = 0f;
+		golfBall.currentVelY = .3f;
 
 	}
 
@@ -167,13 +167,14 @@ public class Golf  implements ApplicationListener {
 //			posX += VX;
 //			posY += VY;
 			golfBall.NextStep();
-			golfBall.currentPosZ = heightFormula(golfBall.currentPosX*fps, golfBall.currentPosY*fps);
-			System.out.println(golfBall.currentPosZ);
+			golfBall.currentPosZ = golfBall.get_height(golfBall.currentPosX*fps, golfBall.currentPosY*fps);
 			
-			ball.transform.translate(golfBall.currentVelX, (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX*60+golfBall.currentVelX, golfBall.currentPosY*60+golfBall.currentVelY)), golfBall.currentVelY);
+			System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX*fps+golfBall.currentVelX, golfBall.currentPosY*fps+golfBall.currentVelY)));
+			
+			ball.transform.setToTranslation(golfBall.currentPosX*fps, golfBall.currentPosZ+.5f, golfBall.currentPosY*fps);
 			ballObject.setWorldTransform(ball.transform);
 
-		cam.position.set(golfBall.currentPosX*fps - 5f, 5f, 0);
+		cam.position.set(golfBall.currentPosX*fps - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY*fps);
 		cam.update();
 		camController.update();
 

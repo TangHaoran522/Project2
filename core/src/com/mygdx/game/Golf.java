@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -64,12 +66,11 @@ public class Golf  implements ApplicationListener {
 	
 	int fps;
 	
-	public float posX;
-	public float posY;
-	public float posZ;
+	public double VX;
+	public double VY;
 	
-	public float VX;
-	public float VY;
+	public double angle = 0;
+	public double velocity = 3;
 
 	@Override
 	public void create () {
@@ -121,6 +122,9 @@ public class Golf  implements ApplicationListener {
 		instances = new Array<ModelInstance>();
 		instances.add(ball);
 		
+		boolean finish = true;
+		Random random = new Random();
+		
 		for (float j = -5f; j <= 5f; j += 0.3f) {
 			for (float i = 0; i <= 199; i += 0.3f) {
 				groundBall = new ModelInstance(model, "groundBalls");
@@ -154,8 +158,11 @@ public class Golf  implements ApplicationListener {
 		golfBall.currentPosY = 0;
 		golfBall.currentPosZ = 2f;
 		
-		golfBall.currentVelX = 3f;
-		golfBall.currentVelY = .3f;
+		
+		calcInit();
+		
+		golfBall.currentVelX = (float)VX;
+		golfBall.currentVelY = (float)VY;
 
 	}
 
@@ -245,5 +252,11 @@ public class Golf  implements ApplicationListener {
 	
 	public static float heightFormula(float x, float y) {
 		return (float)(Math.sin(x) + Math.pow(Math.abs(y), 1.5));
+	}
+	public void calcInit() {
+		
+		VX = Math.cos(angle/360*2*Math.PI)*velocity;
+		VY = Math.sin(angle/360*2*Math.PI)*velocity;
+		
 	}
 }

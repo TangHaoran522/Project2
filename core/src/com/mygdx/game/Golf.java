@@ -76,7 +76,6 @@ public class Golf  implements ApplicationListener {
 
 		cam = new PerspectiveCamera(105, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(3f, 7f, 10f);
-		cam.lookAt(0, 4f, 0);
 		cam.update();
 
 		camController = new CameraInputController(cam);
@@ -108,7 +107,7 @@ public class Golf  implements ApplicationListener {
 		
 		// translate is to a certain position if wanted
 		// remember that the middle of the object is 0.0.0
-		ball.transform.setToTranslation(0, 2f, 0);
+		ball.transform.setToTranslation(0, 1f, 0);
 		// add the modelinstance of the object to the array of objects that has to be rendered
 		instances = new Array<ModelInstance>();
 		instances.add(ball);
@@ -116,7 +115,7 @@ public class Golf  implements ApplicationListener {
 		for (float j = -5f; j <= 5f; j += 0.3f) {
 			for (float i = 0; i <= 99; i += 0.3f) {
 				groundBall = new ModelInstance(model, "groundBalls");
-				groundBall.transform.setToTranslation(i-0.25f,heightFormula(i,j)-0.25f, j-0.25f);
+				groundBall.transform.setToTranslation(i,heightFormula(i,j)-0.25f, j);
 				instances.add(groundBall);
 			}
 		}
@@ -147,7 +146,8 @@ public class Golf  implements ApplicationListener {
 		posZ = 2f;
 		
 		VX = .2f;
-		VY = .01f;
+		VY = 0.01f;
+
 	}
 
 	@Override

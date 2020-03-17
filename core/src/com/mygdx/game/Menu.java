@@ -75,8 +75,8 @@ public class Menu implements Screen {
                 && Gdx.input.getY()>Main.HEIGHT-(OPTION_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-OPTION_HEIGHT) {
             main.batch.draw(optionButtonInactive, Main.WIDTH / 2 - 3 * BUTTON_WIDTH / 8, OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {
-                this.dispose();
-                main.setScreen(null);
+//                this.dispose();
+//                main.setScreen(null);
                 //TODO options
             }
         }else

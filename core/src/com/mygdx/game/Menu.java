@@ -14,7 +14,7 @@ public class Menu implements Screen {
     private final int OPTION_HEIGHT = 200;
     private final int EXIT_HEIGHT = 75;
     
-    public Golf hold;
+    public PuttingSimulator hold;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -32,8 +32,8 @@ public class Menu implements Screen {
     public Menu(Main main){
         this.main = main;
         //TODO:Golf becomes PuttingSimulator
-        //TODO: create PuttingCourse and engine(eulerSolver)
-        hold = new Golf(main);
+
+        hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main);
         hold.create();
         
         playButtonActive=new Texture("PlayButtonActive.jpg");
@@ -74,13 +74,13 @@ public class Menu implements Screen {
                 && Gdx.input.getY()>Main.HEIGHT-(OPTION_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-OPTION_HEIGHT) {
             main.batch.draw(optionButtonInactive, Main.WIDTH / 2 - BUTTON_WIDTH / 2, OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {
-//                this.dispose();
-//                main.setScreen(null);
+                this.dispose();
+                main.setScreen(new OptionMenu(main));
                 //TODO options
             }
         }else
             main.batch.draw(optionButtonActive,Main.WIDTH/2-BUTTON_WIDTH/2,OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
-        if(Gdx.input.getX()<Main.WIDTH/2-3*BUTTON_WIDTH/8+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
+        if(Gdx.input.getX()<Main.WIDTH/2-BUTTON_WIDTH/2+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-BUTTON_WIDTH/2
                 && Gdx.input.getY()>Main.HEIGHT-(EXIT_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-EXIT_HEIGHT) {
             main.batch.draw(exitButtonInactive, Main.WIDTH / 2 - BUTTON_WIDTH / 2, EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {

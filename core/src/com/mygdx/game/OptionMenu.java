@@ -32,7 +32,8 @@ public class OptionMenu implements Screen {
 
         public OptionMenu(Main main){
             this.main = main;
-
+                exitButtonActive=new Texture("ExitButtonActive.jpg");
+                exitButtonInactive=new Texture("ExitButtonInactive.jpg");
             //TODO: make possible to edit settings and such...
         }
 
@@ -49,7 +50,14 @@ public class OptionMenu implements Screen {
 
 
             main.batch.begin();
-
+                if(Gdx.input.getX()<Main.WIDTH-BUTTON_WIDTH-10+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH-BUTTON_WIDTH-10
+                        && Gdx.input.getY()>Main.HEIGHT-(EXIT_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-EXIT_HEIGHT) {
+                        main.batch.draw(exitButtonInactive, Main.WIDTH - BUTTON_WIDTH -10 , EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+                        if(Gdx.input.isTouched()) {
+                               main.setScreen(new Menu(main));
+                        }
+                }else
+                        main.batch.draw(exitButtonActive,Main.WIDTH-BUTTON_WIDTH+10,EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             main.batch.end();
         }
 

@@ -84,13 +84,13 @@ public class PuttingSimulator extends Game implements Screen{
     }
 
     public void take_shot(Vector2d initial_ball_velocity){
-
+        //TODO: euloersolver()
     }
 
     @Override
     public void create() {
         Bullet.init();
-
+        this.ballPosition=this.course.get_start_position();
 
 
         modelBatch = new ModelBatch();
@@ -127,10 +127,12 @@ public class PuttingSimulator extends Game implements Screen{
 
         ball = new ModelInstance(model, "ball");
         groundBall = new ModelInstance(model, "groundBalls");
-/*      TODO: clean up variables
+      //TODO: double check variables
         // translate is to a certain position if wanted
         // remember that the middle of the object is 0.0.0
-        ball.transform.setToTranslation(startX, golfBall.get_height(startX, startY) + 1f, startY);
+        ball.transform.setToTranslation((float)course.get_start_position().getX(),
+                (float)course.get_height().evaluate(new Vector2d(course.get_start_position().getX(),course.get_start_position().getY())) + 1f,
+                (float)course.get_start_position().getY());
         // add the modelinstance of the object to the array of objects that has to be rendered
         instances = new Array<ModelInstance>();
         instances.add(ball);
@@ -139,7 +141,7 @@ public class PuttingSimulator extends Game implements Screen{
         for (float j = -5f; j <= 5f; j += 0.3f) {
             for (float i = 0; i <= 199; i += 0.3f) {
                 groundBall = new ModelInstance(model, "groundBalls");
-                groundBall.transform.setToTranslation(i,golfBall.get_height(i,j)-.25f, j);
+                groundBall.transform.setToTranslation(i,(float)course.get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);
             }
         }
@@ -152,7 +154,7 @@ public class PuttingSimulator extends Game implements Screen{
         // create a collision object with that shape
         groundObject = new btCollisionObject();
         groundObject.setCollisionShape(groundShape);
-        groundObject.setWorldTransform(ground.transform);
+        //groundObject.setWorldTransform(ground.transform);
 
         ballObject = new btCollisionObject();
         ballObject.setCollisionShape(ballShape);
@@ -160,9 +162,9 @@ public class PuttingSimulator extends Game implements Screen{
 
         wallObject = new btCollisionObject();
         wallObject.setCollisionShape(wallShape);
-        ballObject.setWorldTransform(wall.transform);
+      //  ballObject.setWorldTransform(wall.transform);
 
-        collisionConfig = new btDefaultCollisionConfiguration();
+   /**     collisionConfig = new btDefaultCollisionConfiguration();
         dispatcher = new btCollisionDispatcher(collisionConfig);
 
         golfBall.currentPosX = startX;
@@ -174,7 +176,7 @@ public class PuttingSimulator extends Game implements Screen{
 
         golfBall.currentVelX = (float)VX;
         golfBall.currentVelY = (float)VY;
- */   }
+  */  }
 
     @Override
     public void render (float delta) {
@@ -183,15 +185,23 @@ public class PuttingSimulator extends Game implements Screen{
 
 //			posX += VX;
 //			posY += VY;
-
- /*       if (((endX - 0.5f <= golfBall.currentPosX) && (golfBall.currentPosX <= endX + 0.5f))&&((endY - 0.5f <= golfBall.currentPosY) && (golfBall.currentPosY <= endY + 0.5f))) {
+        //TODO: while loop "while not GAMEOVER"
+        if (((course.get_flag_position().getX() - course.get_hole_tolerance() <= this.ballPosition.getX()) &&
+                (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
+                &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
+                && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance()))) {
             main.setScreen(new Menu(main));
         }
         else {
+        //TODO: ask for input from user?
+            //TODO: launch the ball with  velocity as :
+            /***
+             *  Take_shot
+             */
+                //TODO render everynow and then
 
 
-
-            golfBall.NextStep();
+    /*       golfBall.NextStep();
             golfBall.currentPosZ = golfBall.get_height(golfBall.currentPosX, golfBall.currentPosY);
 
             System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
@@ -202,7 +212,7 @@ public class PuttingSimulator extends Game implements Screen{
             cam.position.set(golfBall.currentPosX - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY);
             cam.update();
             camController.update();
-
+*/
 
             Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -212,7 +222,7 @@ public class PuttingSimulator extends Game implements Screen{
             modelBatch.end();
 
         }
-  */  }
+    }
 
     boolean checkCollision () {
         // add a collisionObject wrapper for your new object

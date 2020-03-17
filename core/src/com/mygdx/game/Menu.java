@@ -13,6 +13,8 @@ public class Menu implements Screen {
     private final int PLAY_HEIGHT = 325;
     private final int OPTION_HEIGHT = 200;
     private final int EXIT_HEIGHT = 75;
+    
+    public Golf hold;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -29,6 +31,10 @@ public class Menu implements Screen {
 
     public Menu(Main main){
         this.main = main;
+        
+        hold = new Golf();
+        hold.create();
+        
         playButtonActive=new Texture("PlayButtonActive.jpg");
         playButtonInactive=new Texture("PlayButtonInactive.jpg");
         exitButtonActive=new Texture("ExitButtonActive.jpg");
@@ -60,15 +66,8 @@ public class Menu implements Screen {
                 main.play=true;
                 main.close = true;
                 this.dispose();
-                Golf hold = new Golf();
-                hold.create();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(hold);
                 
-                
-                //TODO: find a way to open game from here?
-//                LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-//                new LwjglApplication(new Golf(), config);
-
             }
         } else
             main.batch.draw(playButtonActive,Main.WIDTH/2-3*BUTTON_WIDTH/8,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -78,6 +77,7 @@ public class Menu implements Screen {
             if(Gdx.input.isTouched()) {
                 this.dispose();
                 main.setScreen(null);
+                //TODO options
             }
         }else
             main.batch.draw(optionButtonActive,Main.WIDTH/2-3*BUTTON_WIDTH/8,OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);

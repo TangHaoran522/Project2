@@ -32,7 +32,7 @@ public class Menu implements Screen {
     public Menu(Main main){
         this.main = main;
         
-        hold = new Golf();
+        hold = new Golf(main);
         hold.create();
         
         playButtonActive=new Texture("PlayButtonActive.jpg");

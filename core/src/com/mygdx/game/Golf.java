@@ -3,7 +3,9 @@ package com.mygdx.game;
 import java.util.Random;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -34,10 +36,12 @@ import com.badlogic.gdx.physics.bullet.collision.btManifoldResult;
 import com.badlogic.gdx.physics.bullet.collision.btSphereBoxCollisionAlgorithm;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Main;
+
 
 import Model.Ball;
 
-public class Golf  implements ApplicationListener {
+public class Golf extends Game implements Screen {
 	
 	PerspectiveCamera cam;
 	CameraInputController camController;
@@ -74,6 +78,8 @@ public class Golf  implements ApplicationListener {
 
 	@Override
 	public void create () {
+		
+		
 		Bullet.init();
 		golfBall = new Ball();
 
@@ -163,12 +169,11 @@ public class Golf  implements ApplicationListener {
 		
 		golfBall.currentVelX = (float)VX;
 		golfBall.currentVelY = (float)VY;
-
 	}
 
 	@Override
-	public void render () {
-		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+	public void render (float delta) {
+//		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
 			
 //			posX += VX;
@@ -257,6 +262,18 @@ public class Golf  implements ApplicationListener {
 		
 		VX = Math.cos(angle/360*2*Math.PI)*velocity;
 		VY = Math.sin(angle/360*2*Math.PI)*velocity;
+		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
 		
 	}
 }

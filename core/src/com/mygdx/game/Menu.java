@@ -60,6 +60,11 @@ public class Menu implements Screen {
                 main.play=true;
                 main.close = true;
                 this.dispose();
+                Golf hold = new Golf();
+                hold.create();
+                ((Game)Gdx.app.getApplicationListener()).setScreen(hold);
+                
+                
                 //TODO: find a way to open game from here?
 //                LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //                new LwjglApplication(new Golf(), config);

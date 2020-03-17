@@ -4,12 +4,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Main extends Game {
+	
+	public Game gameObject;
+	
     public SpriteBatch batch;
     public boolean play = true;
     public boolean close = false;
 
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;
+
 
     @Override
     public void create() {

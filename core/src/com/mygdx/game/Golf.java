@@ -128,7 +128,7 @@ public class Golf  implements ApplicationListener {
 		for (float j = -5f; j <= 5f; j += 0.3f) {
 			for (float i = 0; i <= 199; i += 0.3f) {
 				groundBall = new ModelInstance(model, "groundBalls");
-				groundBall.transform.setToTranslation(i,golfBall.get_height(i,j)-0.25f, j);
+				groundBall.transform.setToTranslation(i,golfBall.get_height(i,j)-.25f, j);
 				instances.add(groundBall);
 			}
 		}

@@ -72,8 +72,24 @@ public static float stepSize = (float)(1.0/fps);
 	 *Euler's method finding the slope
 	 */
 	private static void setSlopes() {
-		DzDx = (get_height(nextPosX, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
-		DzDy = (get_height(currentPosX, nextPosY) - get_height(currentPosX, currentPosY))/stepSize;
+		if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)>get_height(currentPosX, currentPosY))){
+	        DzDx = (get_height(nextPosX, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
+	    }else if((currentPosX>nextPosX)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
+	        DzDx = (get_height(currentPosX, currentPosY) - get_height(nextPosX, currentPosY))/stepSize;
+	    }else if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)<get_height(currentPosX, currentPosY))){
+	        DzDx = -((get_height(currentPosX, currentPosY) - get_height(nextPosX, currentPosY))/stepSize);
+	    }else{
+	        DzDx = -((get_height(nextPosX, currentPosY) - get_height(currentPosX, currentPosY))/stepSize);
+	    }
+	    if((nextPosY>currentPosY)&&(get_height(currentPosX, nextPosY)>get_height(currentPosX, currentPosY))){
+	        DzDy = (get_height(currentPosX, nextPosY) - get_height(currentPosX, currentPosY))/stepSize;
+	    }else if((currentPosY>nextPosY)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
+	        DzDy = (get_height(currentPosX, currentPosY) - get_height(currentPosX, nextPosY))/stepSize;
+	    }else if((nextPosY>currentPosY)&&(get_height(nextPosX, nextPosY)<get_height(currentPosX, currentPosY))){
+	        DzDy = -((get_height(currentPosX, currentPosY) - get_height(currentPosX, nextPosY))/stepSize);
+	    }else{
+	        DzDy = -((get_height(currentPosX, nextPosY) - get_height(currentPosX, currentPosY))/stepSize);
+	    }
 
 	}
 	/**

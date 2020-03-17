@@ -33,7 +33,7 @@ public static float stepSize = (float)(1.0/fps);
 	//the variables they require for the import, some not used yet:
 	public static float g = 9.81f;
 	public static float m = 45.93f;
-	public static float mu = 0.131f;
+	public static float mu = 0.0f;
 	public static float vmax= 3.0f;
 	public static float tol = 0.02f;
 	

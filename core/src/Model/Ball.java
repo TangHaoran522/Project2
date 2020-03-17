@@ -2,7 +2,7 @@ package Model;
 
 public class Ball {
 	
-public static int fps = 120;
+public static int fps = 165;
 	
 public static float stepSize = (float)(1.0/fps);
 	
@@ -42,7 +42,7 @@ public static float stepSize = (float)(1.0/fps);
 	
 //(Math.round(currentPosX*1000000)!=Math.round(previousPosX*1000000))||(Math.round(currentPosY*1000000))!=(Math.round(previousPosY*1000000))
 	public static float get_height(float x, float y) {
-		return (float)(Math.sin(x) + Math.pow(Math.abs(y), 1.5));
+		return (float)(Math.sin(x) + y*y);
 	}
 	
 	public static void NextStep() {

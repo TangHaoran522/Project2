@@ -74,10 +74,28 @@ public class Golf extends Game implements Screen {
 	public double VY;
 	
 	public double angle = 0;
-	public double velocity = 3;
+	public double velocity = 25;
+	
+	public float startX;
+	public float startY;
+	
+	public float endX;
+	public float endY;
+	
+	public Main main;
+	
+	public Golf(Main _main) {
+		main = _main;
+	}
 
 	@Override
 	public void create () {
+		
+		startX = 0f;
+		startY = 0f;
+		
+		endX = 10f;
+		endY = 0f;
 		
 		
 		Bullet.init();
@@ -123,13 +141,11 @@ public class Golf extends Game implements Screen {
 		
 		// translate is to a certain position if wanted
 		// remember that the middle of the object is 0.0.0
-		ball.transform.setToTranslation(0, 1f, 0);
+		ball.transform.setToTranslation(startX, golfBall.get_height(startX, startY) + 1f, startY);
 		// add the modelinstance of the object to the array of objects that has to be rendered
 		instances = new Array<ModelInstance>();
 		instances.add(ball);
 		
-		boolean finish = true;
-		Random random = new Random();
 		
 		for (float j = -5f; j <= 5f; j += 0.3f) {
 			for (float i = 0; i <= 199; i += 0.3f) {
@@ -160,9 +176,9 @@ public class Golf extends Game implements Screen {
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		
-		golfBall.currentPosX = 0;
-		golfBall.currentPosY = 0;
-		golfBall.currentPosZ = 2f;
+		golfBall.currentPosX = startX;
+		golfBall.currentPosY = startY;
+		golfBall.currentPosZ = golfBall.get_height(startX, startY) + 1f;
 		
 		
 		calcInit();
@@ -178,15 +194,23 @@ public class Golf extends Game implements Screen {
 			
 //			posX += VX;
 //			posY += VY;
+		
+		if (((endX - 0.5f <= golfBall.currentPosX) && (golfBall.currentPosX <= endX + 0.5f))&&((endY - 0.5f <= golfBall.currentPosY) && (golfBall.currentPosY <= endY + 0.5f))) {
+			main.setScreen(new Menu(main));
+		}
+		else {
+		
+		
+		
 			golfBall.NextStep();
-			golfBall.currentPosZ = golfBall.get_height(golfBall.currentPosX*fps, golfBall.currentPosY*fps);
+			golfBall.currentPosZ = golfBall.get_height(golfBall.currentPosX, golfBall.currentPosY);
 			
-			System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX*fps+golfBall.currentVelX, golfBall.currentPosY*fps+golfBall.currentVelY)));
+			System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
 			
-			ball.transform.setToTranslation(golfBall.currentPosX*fps, golfBall.currentPosZ+.5f, golfBall.currentPosY*fps);
+			ball.transform.setToTranslation(golfBall.currentPosX, golfBall.currentPosZ+.5f, golfBall.currentPosY);
 			ballObject.setWorldTransform(ball.transform);
 
-		cam.position.set(golfBall.currentPosX*fps - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY*fps);
+		cam.position.set(golfBall.currentPosX - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY);
 		cam.update();
 		camController.update();
 
@@ -197,6 +221,8 @@ public class Golf extends Game implements Screen {
 		modelBatch.begin(cam);
 		modelBatch.render(instances, environment);
 		modelBatch.end();
+		
+		}
 	}
 
 	boolean checkCollision () {

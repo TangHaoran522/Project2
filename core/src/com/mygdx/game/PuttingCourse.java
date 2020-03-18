@@ -3,6 +3,10 @@ package com.mygdx.game;
 
 import Model.Function2d;
 import Model.Vector2d;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.utils.Array;
 //import jdk.nashorn.internal.objects.annotations.Function;
 
 public class PuttingCourse{
@@ -21,7 +25,25 @@ public class PuttingCourse{
         this.maximumVelocity=10.0;
         this.holeTolerance = 0.5f;
     }
-    
+//TODO: should we move everthing related to the course modeling etc here?
+    public Array<ModelInstance> getCourseModel(){
+        Model model = new Model();
+        ModelBuilder mb = new ModelBuilder();
+        mb.begin();
+        Array<ModelInstance> instances = new Array<>();
+        ModelInstance groundBall = new ModelInstance(model, "groundBalls");
+
+        for (float j = -5f; j <= 5f; j += 0.3f) {
+            for (float i = 0; i <= 199; i += 0.3f) {
+                groundBall = new ModelInstance(model, "groundBalls");
+                groundBall.transform.setToTranslation(i,(float)get_height().evaluate(new Vector2d(i,j))-.25f, j);
+                instances.add(groundBall);
+            }
+        }
+
+        return instances;
+    }
+
     public Function2d get_height(){
         return this.height;
     }

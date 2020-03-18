@@ -65,7 +65,7 @@ public class PuttingSimulator extends Game implements Screen{
     btCollisionObject groundObject;
     btCollisionObject ballObject;
     btCollisionObject wallObject;
-    
+
     int count;
 
 
@@ -206,11 +206,12 @@ public class PuttingSimulator extends Game implements Screen{
         if (((((course.get_flag_position().getX() - course.get_hole_tolerance() <= this.ballPosition.getX()) &&
                 (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
-                && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance()))) && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 5*60) {
+                && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance())))
+                && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 5*60) {
             main.setScreen(new Menu(main));
         }
         else {
-        	
+
         	System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
 
         	eulerSolver.NextStep();

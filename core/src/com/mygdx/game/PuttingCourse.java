@@ -1,10 +1,11 @@
 package com.mygdx.game;
 
+
 import Model.Function2d;
 import Model.Vector2d;
-import jdk.nashorn.internal.objects.annotations.Function;
+//import jdk.nashorn.internal.objects.annotations.Function;
 
-public class PuttingCourse {
+public class PuttingCourse{
     private Function2d height;
     private Vector2d flag;
     private Vector2d start;
@@ -20,6 +21,7 @@ public class PuttingCourse {
         this.maximumVelocity=10.0;
         this.holeTolerance = 1.5;
     }
+    
     public Function2d get_height(){
         return this.height;
     }

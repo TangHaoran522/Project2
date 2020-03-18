@@ -14,8 +14,9 @@ public class OptionMenu implements Screen {
         private final int PLAY_HEIGHT = 325;
         private final int OPTION_HEIGHT = 200;
         private final int EXIT_HEIGHT = 75;
-
-
+        
+        public float velocity = 15;
+        public float angle = 0;
 
         Texture exitButtonActive;
         Texture exitButtonInactive;

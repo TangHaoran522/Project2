@@ -28,13 +28,13 @@ public class Menu implements Screen {
     Texture group20;
 
     private Main main;
+    
+    public OptionMenu menu;
 
     public Menu(Main main){
         this.main = main;
+        menu = new OptionMenu(main);
         //TODO:Golf becomes PuttingSimulator
-
-        hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main);
-        hold.create();
         
         playButtonActive=new Texture("PlayButtonActive.jpg");
         playButtonInactive=new Texture("PlayButtonInactive.jpg");
@@ -65,6 +65,9 @@ public class Menu implements Screen {
             main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 this.dispose();
+                System.out.println("here");
+                hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main, menu);
+                hold.create();
                 main.setScreen(hold);
                 
             }

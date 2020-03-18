@@ -94,7 +94,7 @@ public class Golf extends Game implements Screen {
 		startX = 0f;
 		startY = 0f;
 		
-		endX = 10f;
+		endX = 100f;
 		endY = 0f;
 		
 		
@@ -194,6 +194,7 @@ public class Golf extends Game implements Screen {
 			
 //			posX += VX;
 //			posY += VY;
+		System.out.println("here");
 		
 		if (((endX - 0.5f <= golfBall.currentPosX) && (golfBall.currentPosX <= endX + 0.5f))&&((endY - 0.5f <= golfBall.currentPosY) && (golfBall.currentPosY <= endY + 0.5f))) {
 			main.setScreen(new Menu(main));
@@ -207,7 +208,7 @@ public class Golf extends Game implements Screen {
 			
 			System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
 			
-			ball.transform.setToTranslation(golfBall.currentPosX, golfBall.currentPosZ+.5f, golfBall.currentPosY);
+			ball.transform.setToTranslation(golfBall.currentPosX*fps, golfBall.currentPosZ*fps+.5f, golfBall.currentPosY*fps);
 			ballObject.setWorldTransform(ball.transform);
 
 		cam.position.set(golfBall.currentPosX - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY);
@@ -221,6 +222,8 @@ public class Golf extends Game implements Screen {
 		modelBatch.begin(cam);
 		modelBatch.render(instances, environment);
 		modelBatch.end();
+		
+		System.out.println(golfBall.currentPosX + " " + golfBall.currentPosZ + " " + golfBall.currentPosY);
 		
 		}
 	}

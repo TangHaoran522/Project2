@@ -54,6 +54,7 @@ public class PuttingSimulator extends Game implements Screen{
     ModelInstance ball;
 
     Main main;
+    OptionMenu menu;
 
     btCollisionShape groundShape;
     btCollisionShape ballShape;
@@ -68,10 +69,11 @@ public class PuttingSimulator extends Game implements Screen{
         this.course=course;
         this.eulerSolver=euler;
     }
-    public PuttingSimulator(PuttingCourse course, PhysicsEngine euler, Main main){
+    public PuttingSimulator(PuttingCourse course, PhysicsEngine euler, Main main, OptionMenu menu){
         this.course=course;
         this.eulerSolver=euler;
         this.main=main;
+        this.menu=menu;
 
     }
     public void set_ball_position(Vector2d v){
@@ -85,6 +87,9 @@ public class PuttingSimulator extends Game implements Screen{
 
     public void take_shot(Vector2d initial_ball_velocity){
         //TODO: euloersolver()
+    	eulerSolver.setVelX((float)initial_ball_velocity.getX());
+    	eulerSolver.setVelY((float)initial_ball_velocity.getY());
+    	eulerSolver.NextStep();
     }
 
     @Override
@@ -164,19 +169,16 @@ public class PuttingSimulator extends Game implements Screen{
         wallObject.setCollisionShape(wallShape);
       //  ballObject.setWorldTransform(wall.transform);
 
-   /**     collisionConfig = new btDefaultCollisionConfiguration();
-        dispatcher = new btCollisionDispatcher(collisionConfig);
+//        collisionConfig = new btDefaultCollisionConfiguration();
+//        dispatcher = new btCollisionDispatcher(collisionConfig);
 
-        golfBall.currentPosX = startX;
-        golfBall.currentPosY = startY;
-        golfBall.currentPosZ = golfBall.get_height(startX, startY) + 1f;
+        eulerSolver.setPosX((float)ballPosition.getX());
+        eulerSolver.setPosY((float)ballPosition.getY());
+        eulerSolver.setPosZ(eulerSolver.get_height((float)ballPosition.getX(), (float)ballPosition.getY()) + 1f);
 
 
-        calcInit();
-
-        golfBall.currentVelX = (float)VX;
-        golfBall.currentVelY = (float)VY;
-  */  }
+        take_shot(calcInit());
+    }
 
     @Override
     public void render (float delta) {
@@ -201,18 +203,18 @@ public class PuttingSimulator extends Game implements Screen{
                 //TODO render everynow and then
 
 
-    /*       golfBall.NextStep();
-            golfBall.currentPosZ = golfBall.get_height(golfBall.currentPosX, golfBall.currentPosY);
+        	eulerSolver.NextStep();
+        	eulerSolver.setPosZ(eulerSolver.get_height(eulerSolver.getPosX(), eulerSolver.getPosY()));
 
-            System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
+//            System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
 
-            ball.transform.setToTranslation(golfBall.currentPosX, golfBall.currentPosZ+.5f, golfBall.currentPosY);
+            ball.transform.setToTranslation(eulerSolver.getPosX(), eulerSolver.getPosZ()+.5f, eulerSolver.getPosY());
             ballObject.setWorldTransform(ball.transform);
 
-            cam.position.set(golfBall.currentPosX - 5f, Math.max(5f,golfBall.currentPosZ+3f), golfBall.currentPosY);
+            cam.position.set(eulerSolver.getPosX() - 5f, Math.max(5f,eulerSolver.getPosZ()+3f), eulerSolver.getPosY());
             cam.update();
             camController.update();
-*/
+
 
             Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -283,10 +285,9 @@ public class PuttingSimulator extends Game implements Screen{
     public static float heightFormula(float x, float y) {
         return (float)(Math.sin(x) + Math.pow(Math.abs(y), 1.5));
     }
-    public void calcInit() {
+    public Vector2d calcInit() {
 
-//        VX = Math.cos(angle/360*2*Math.PI)*velocity;
-//        VY = Math.sin(angle/360*2*Math.PI)*velocity;
+    	return new Vector2d(Math.cos(menu.angle/360*2*Math.PI)*menu.velocity, Math.sin(menu.angle/360*2*Math.PI)*menu.velocity);
 
     }
 

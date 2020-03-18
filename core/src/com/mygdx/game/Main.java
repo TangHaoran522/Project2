@@ -12,8 +12,7 @@ public class Main extends Game {
 	private PhysicsEngine eulerSolver;
 	
     public SpriteBatch batch;
-    public boolean play = true;
-    public boolean close = false;
+
 
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;

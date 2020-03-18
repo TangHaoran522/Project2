@@ -65,7 +65,6 @@ public class Menu implements Screen {
             main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 this.dispose();
-                System.out.println("here");
                 hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main, menu);
                 hold.create();
                 main.setScreen(hold);

@@ -86,10 +86,9 @@ public class PuttingSimulator extends Game implements Screen{
     }
 
     public void take_shot(Vector2d initial_ball_velocity){
-        //TODO: euloersolver()
     	eulerSolver.setVelX((float)initial_ball_velocity.getX());
     	eulerSolver.setVelY((float)initial_ball_velocity.getY());
-    	eulerSolver.NextStep();
+//    	eulerSolver.NextStep();
     }
 
     @Override
@@ -182,12 +181,8 @@ public class PuttingSimulator extends Game implements Screen{
 
     @Override
     public void render (float delta) {
-//		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
-
-//			posX += VX;
-//			posY += VY;
-        //TODO: while loop "while not GAMEOVER"
+        //TODO: add game over
         if (((course.get_flag_position().getX() - course.get_hole_tolerance() <= this.ballPosition.getX()) &&
                 (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
@@ -195,13 +190,6 @@ public class PuttingSimulator extends Game implements Screen{
             main.setScreen(new Menu(main));
         }
         else {
-        //TODO: ask for input from user?
-            //TODO: launch the ball with  velocity as :
-            /***
-             *  Take_shot
-             */
-                //TODO render everynow and then
-
 
         	eulerSolver.NextStep();
         	eulerSolver.setPosZ(eulerSolver.get_height(eulerSolver.getPosX(), eulerSolver.getPosY()));

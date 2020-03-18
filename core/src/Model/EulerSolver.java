@@ -73,24 +73,25 @@ public class EulerSolver implements PhysicsEngine {
 		 *Euler's method finding the slope
 		 */
 		private void setSlopes() {
+			float change =0.1f;
 			if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)>get_height(currentPosX, currentPosY))){
-		        DzDx = (get_height(nextPosX, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
-		    }else if((currentPosX>nextPosX)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
-		        DzDx = (get_height(currentPosX, currentPosY) - get_height(nextPosX, currentPosY))/stepSize;
-		    }else if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)<get_height(currentPosX, currentPosY))){
-		        DzDx = -((get_height(currentPosX, currentPosY) - get_height(nextPosX, currentPosY))/stepSize);
-		    }else{
-		        DzDx = -((get_height(nextPosX, currentPosY) - get_height(currentPosX, currentPosY))/stepSize);
-		    }
-		    if((nextPosY>currentPosY)&&(get_height(currentPosX, nextPosY)>get_height(currentPosX, currentPosY))){
-		        DzDy = (get_height(currentPosX, nextPosY) - get_height(currentPosX, currentPosY))/stepSize;
-		    }else if((currentPosY>nextPosY)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
-		        DzDy = (get_height(currentPosX, currentPosY) - get_height(currentPosX, nextPosY))/stepSize;
-		    }else if((nextPosY>currentPosY)&&(get_height(nextPosX, nextPosY)<get_height(currentPosX, currentPosY))){
-		        DzDy = -((get_height(currentPosX, currentPosY) - get_height(currentPosX, nextPosY))/stepSize);
-		    }else{
-		        DzDy = -((get_height(currentPosX, nextPosY) - get_height(currentPosX, currentPosY))/stepSize);
-		    }
+				DzDx = (get_height(currentPosX+change, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
+			}else if((currentPosX>nextPosX)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
+				DzDx = (get_height(currentPosX, currentPosY) - get_height(currentPosX-change, currentPosY))/stepSize;
+			}else if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)<get_height(currentPosX, currentPosY))){
+				DzDx = -((get_height(currentPosX, currentPosY) - get_height(currentPosX+change, currentPosY))/stepSize);
+			}else{
+				DzDx = -((get_height(currentPosX-change, currentPosY) - get_height(currentPosX, currentPosY))/stepSize);
+			}
+			if((nextPosY>currentPosY)&&(get_height(currentPosX, nextPosY)>get_height(currentPosX, currentPosY))){
+				DzDy = (get_height(currentPosX, currentPosY+change) - get_height(currentPosX, currentPosY))/stepSize;
+			}else if((currentPosY>nextPosY)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
+				DzDy = (get_height(currentPosX, currentPosY) - get_height(currentPosX, currentPosY-change))/stepSize;
+			}else if((nextPosY>currentPosY)&&(get_height(nextPosX, nextPosY)<get_height(currentPosX, currentPosY))){
+				DzDy = -((get_height(currentPosX, currentPosY) - get_height(currentPosX, currentPosY+change))/stepSize);
+			}else{
+				DzDy = -((get_height(currentPosX, currentPosY-change) - get_height(currentPosX, currentPosY))/stepSize);
+			}
 
 		}
 		/**

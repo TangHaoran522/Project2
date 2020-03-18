@@ -12,8 +12,7 @@ public class Main extends Game {
 	private PhysicsEngine eulerSolver;
 	
     public SpriteBatch batch;
-    public boolean play = true;
-    public boolean close = false;
+
 
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;
@@ -23,7 +22,7 @@ public class Main extends Game {
     public void create() {
         batch = new SpriteBatch();
         eulerSolver = new EulerSolver();
-        course = new PuttingCourse(new CourseShaper("A function"), new Vector2d(15,0), new Vector2d(0,0));
+        course = new PuttingCourse(new CourseShaper("A function"), new Vector2d(50,0), new Vector2d(0,0));
         this.setScreen(new Menu(this));
     }
 

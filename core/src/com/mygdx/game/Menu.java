@@ -44,9 +44,10 @@ public class Menu implements Screen {
         exitButtonInactive=new Texture("ExitButtonInactive.jpg");
         optionButtonActive=new Texture("OptionButtonActive.jpg");
         optionButtonInactive=new Texture("OptionButtonInactive.jpg");
-      //  group20=new Texture("Group20.png");
+        group20=new Texture("Group20.jpg");
 
     }
+
 
 
     @Override
@@ -61,7 +62,7 @@ public class Menu implements Screen {
 
 
         main.batch.begin();
-      //  main.batch.draw(group20,0, Main.HEIGHT-BUTTON_HEIGHT,BUTTON_WIDTH, BUTTON_HEIGHT );
+        main.batch.draw(group20,0, 0,main.WIDTH, main.HEIGHT );
         if(Gdx.input.getX()<Main.WIDTH/2-BUTTON_WIDTH/2+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
         && Gdx.input.getY()>Main.HEIGHT-(PLAY_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-PLAY_HEIGHT){
             main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -86,8 +87,6 @@ public class Menu implements Screen {
                 && Gdx.input.getY()>Main.HEIGHT-(EXIT_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-EXIT_HEIGHT) {
             main.batch.draw(exitButtonInactive, Main.WIDTH / 2 - BUTTON_WIDTH / 2, EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {
-                main.play = false;
-                main.close=true;
                 Gdx.app.exit();
             }
         }else

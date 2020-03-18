@@ -21,8 +21,8 @@ public class Main extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        eulerSolver = new EulerSolver();
-        course = new PuttingCourse(new CourseShaper("A function"), new Vector2d(50,0), new Vector2d(0,0));
+        eulerSolver = new EulerSolver("1 sin x + y ^ 2");
+        course = new PuttingCourse(new CourseShaper("1 sin x + y ^ 2"), new Vector2d(50,0), new Vector2d(0,0));
         this.setScreen(new Menu(this));
     }
 

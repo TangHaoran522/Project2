@@ -1,8 +1,14 @@
 package Model;
 
+import com.mygdx.game.CourseShaper;
+import com.mygdx.game.PuttingCourse;
+
 public class EulerSolver implements PhysicsEngine {
 
 	public  int fps = 60;
+	
+	String[] hold;
+	CourseShaper shape;
 	
 	public  float stepSize = (float)(1.0/fps);
 		
@@ -41,9 +47,15 @@ public class EulerSolver implements PhysicsEngine {
 		public float goalX = 0.0f;
 		public float goalY = 10.0f;
 		
+		public EulerSolver(String ab) {
+			shape = new CourseShaper(ab);
+		}
+		
+
 	//(Math.round(currentPosX*1000000)!=Math.round(previousPosX*1000000))||(Math.round(currentPosY*1000000))!=(Math.round(previousPosY*1000000))
 		public float get_height(float x, float y) {
-			return (float)(Math.sin(x) + y*y);
+			return (float)shape.evaluate(new Vector2d(x,y));
+			//return (float)(Math.sin(x) + y*y);
 		}
 		
 		public void NextStep() {

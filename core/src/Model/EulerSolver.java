@@ -7,6 +7,7 @@ public class EulerSolver implements PhysicsEngine {
 	public  float stepSize = (float)(1.0/fps);
 		
 		//just storing the previous position to check when to stop loop
+
 		public float previousPosX;
 		public float previousPosY;
 

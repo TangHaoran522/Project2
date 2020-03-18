@@ -207,7 +207,7 @@ public class PuttingSimulator extends Game implements Screen{
                 (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
                 && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance())))
-                && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 5*60) {
+                && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 2*60) {
             main.setScreen(new Menu(main));
         }
         else {
@@ -321,6 +321,9 @@ public class PuttingSimulator extends Game implements Screen{
     @Override
     public void hide() {
 
-
+    }
+    
+    public void setOption(OptionMenu option) {
+    	this.menu = option;
     }
 }

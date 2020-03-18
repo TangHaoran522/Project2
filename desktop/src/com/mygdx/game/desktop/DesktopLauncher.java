@@ -16,7 +16,8 @@ public class DesktopLauncher {
 		config.foregroundFPS = 60;
 		config.backgroundFPS = 60;
 		
+		Main hold = new Main();
 		
-		new LwjglApplication(new Main(), config);
+		new LwjglApplication(hold, config);
 	}
 }

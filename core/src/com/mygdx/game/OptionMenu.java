@@ -26,8 +26,8 @@ public class OptionMenu implements Screen {
 
     private final int EXIT_HEIGHT = 75;
 
-    public float velocity = 15;
-    public float angle = 0;
+    public float velocity = 20;
+    public float angle = 15;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -169,7 +169,9 @@ public class OptionMenu implements Screen {
     public void play(float speed, float angle){
         this.velocity=speed;
         this.angle=angle;
-        main.setScreen(new Menu(main));
+        Menu hold = new Menu(main);
+        hold.setOptionMenu(this);
+        main.setScreen(hold);
     }
 
     public void loadMap(String path){

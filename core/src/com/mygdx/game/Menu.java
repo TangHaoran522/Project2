@@ -68,6 +68,8 @@ public class Menu implements Screen {
             main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 this.dispose();
+                hold.setOption(menu);
+                hold.take_shot(hold.calcInit());
                 main.setScreen(hold);
                 
             }
@@ -118,5 +120,9 @@ public class Menu implements Screen {
     @Override
     public void dispose() {
 
+    }
+    
+    public void setOptionMenu(OptionMenu option) {
+    	this.menu = option;
     }
 }

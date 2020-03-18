@@ -236,7 +236,7 @@ public class PuttingSimulator extends Game implements Screen{
             modelBatch.render(instances, environment);
             modelBatch.end();
             
-            if (Math.abs(eulerSolver.getVelX()) <= 0.000001f &&  Math.abs(eulerSolver.getVelY()) <= 0.000001f) {
+            if (Math.abs(eulerSolver.getVelX()) <= 0.2f &&  Math.abs(eulerSolver.getVelY()) <= 0.2f) {
             	count++;
             }
             else {

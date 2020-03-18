@@ -34,7 +34,7 @@ public class EulerSolver implements PhysicsEngine {
 		//the variables they require for the import, some not used yet:
 		public float g = 9.81f;
 		public float m = 45.93f;
-		public float mu = 0.131f;
+		public float mu = 0.9f;
 		public float vmax= 3.0f;
 		public float tol = 0.02f;
 		

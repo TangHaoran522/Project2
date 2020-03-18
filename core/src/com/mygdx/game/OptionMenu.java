@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Model.Vector2d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,8 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class OptionMenu implements Screen {
@@ -187,8 +191,42 @@ public class OptionMenu implements Screen {
     public void loadSpeed(String path){
         try{
             FileReader fr = new FileReader(path);
-            //Todo: store speeds in an array
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine();
+            double x=0, y=0;
+            int ycounter = 0;
+            int xcounter =0;
+            ArrayList<Vector2d> speeds = new ArrayList<>();
+            while(line!= null){
+                String[] terms = line.split(",");
+                if(terms.length==2){
+                    if((terms[0].matches(decimalPattern)||terms[0].matches(naturalPattern))&&
+                            (terms[1].matches(decimalPattern)||terms[1].matches(naturalPattern)))
+                        speeds.add(new Vector2d(Double.parseDouble(terms[0]), Double.parseDouble(terms[1])));
+                }else
+                for(int i=0; i<terms.length;i++){
+                    if(terms[i].contains("x") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
+                            Pattern.matches(terms[i+1], naturalPattern))) {
+                        x=Double.parseDouble(terms[i+1]);
+                        xcounter ++;
+                    }
+                    else if(terms[i].contains("y") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
+                            Pattern.matches(terms[i+1], naturalPattern))) {
+                        y=Double.parseDouble(terms[i+1]);
+                        ycounter++;
+                    }
+                    else if(xcounter == ycounter && xcounter !=0){
+                        speeds.add(new Vector2d(x,y));
+                        xcounter = 0;
+                        ycounter = 0 ;
+                    }
+                }
+                line = br.readLine();
+            }
+            fr.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e){
             e.printStackTrace();
         }
 

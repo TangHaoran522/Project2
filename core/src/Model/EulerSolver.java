@@ -97,9 +97,9 @@ public class EulerSolver implements PhysicsEngine {
 			}
 			if((nextPosY>currentPosY)&&(get_height(currentPosX, nextPosY)>get_height(currentPosX, currentPosY))){
 				DzDy = (get_height(currentPosX, currentPosY+change) - get_height(currentPosX, currentPosY))/stepSize;
-			}else if((currentPosY>nextPosY)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
+			}else if((currentPosY>nextPosY)&&(get_height(currentPosX, currentPosY)>get_height(currentPosX, nextPosY))){
 				DzDy = (get_height(currentPosX, currentPosY) - get_height(currentPosX, currentPosY-change))/stepSize;
-			}else if((nextPosY>currentPosY)&&(get_height(nextPosX, nextPosY)<get_height(currentPosX, currentPosY))){
+			}else if((nextPosY>currentPosY)&&(get_height(currentPosX, nextPosY)<get_height(currentPosX, currentPosY))){
 				DzDy = -((get_height(currentPosX, currentPosY) - get_height(currentPosX, currentPosY+change))/stepSize);
 			}else{
 				DzDy = -((get_height(currentPosX, currentPosY-change) - get_height(currentPosX, currentPosY))/stepSize);

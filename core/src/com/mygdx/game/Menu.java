@@ -14,6 +14,8 @@ public class Menu implements Screen {
     private final int OPTION_HEIGHT = 200;
     private final int EXIT_HEIGHT = 75;
     
+    public boolean newLVL;
+    
     public PuttingSimulator hold;
 
     Texture exitButtonActive;
@@ -36,6 +38,8 @@ public class Menu implements Screen {
         menu = new OptionMenu(main);
         hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main, menu);
         hold.create();
+        
+        newLVL = false;
         //TODO:Golf becomes PuttingSimulator
         
         playButtonActive=new Texture("PlayButtonActive.jpg");
@@ -68,6 +72,12 @@ public class Menu implements Screen {
             main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
                 this.dispose();
+                
+                if (newLVL) {
+                	hold.setCourse(menu.course);
+                	hold.create();
+                }
+                
                 hold.setOption(menu);
                 hold.take_shot(hold.calcInit());
                 main.setScreen(hold);

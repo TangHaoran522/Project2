@@ -35,6 +35,8 @@ import com.badlogic.gdx.physics.bullet.collision.btManifoldResult;
 import com.badlogic.gdx.physics.bullet.collision.btSphereBoxCollisionAlgorithm;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.utils.Array;
+
+import Model.EulerSolver;
 import Model.PhysicsEngine;
 
 
@@ -65,6 +67,8 @@ public class PuttingSimulator extends Game implements Screen{
     btCollisionObject groundObject;
     btCollisionObject ballObject;
     btCollisionObject wallObject;
+    
+    CourseShaper shape = new CourseShaper("1 sin x + y ^ 2");
 
     int count;
 
@@ -325,5 +329,11 @@ public class PuttingSimulator extends Game implements Screen{
     
     public void setOption(OptionMenu option) {
     	this.menu = option;
+    }
+    
+    public void setCourse(String code) {
+    	this.shape = new CourseShaper(code);
+    	this.course.set_Func2d(shape);
+    	eulerSolver = (PhysicsEngine)new EulerSolver(code);
     }
 }

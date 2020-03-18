@@ -68,4 +68,8 @@ public class PuttingCourse{
     public double get_hole_tolerance(){
         return this.holeTolerance;
     }
+    
+    public void set_Func2d(Function2d add) {
+    	this.height = add;
+    }
 }

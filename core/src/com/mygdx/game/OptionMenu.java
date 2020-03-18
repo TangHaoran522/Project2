@@ -54,6 +54,8 @@ public class OptionMenu implements Screen {
 
     TextButton loadMapB;
     TextButton loadSpeedB;
+    
+    public String course;
 
     public OptionMenu(Main main){
         this.main = main;
@@ -179,12 +181,18 @@ public class OptionMenu implements Screen {
     }
 
     public void loadMap(String path){
-        try{
-            FileReader fr = new FileReader(path);
-            //TODO: call courseShaper
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try{
+//            FileReader fr = new FileReader(path);
+//            //TODO: call courseShaper
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+    	
+    	course = path;
+    	Menu hold = new Menu(main);
+        hold.setOptionMenu(this);
+        hold.newLVL = true;
+        main.setScreen(hold);
 
     }
 

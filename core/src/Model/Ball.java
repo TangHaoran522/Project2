@@ -2,7 +2,7 @@ package Model;
 
 public class Ball {
 	
-public static int fps = 165;
+public static int fps = 60;
 	
 public static float stepSize = (float)(1.0/fps);
 	

@@ -14,7 +14,7 @@ public class Menu implements Screen {
     private final int OPTION_HEIGHT = 200;
     private final int EXIT_HEIGHT = 75;
     
-    public Golf hold;
+    public PuttingSimulator hold;
 
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -28,12 +28,15 @@ public class Menu implements Screen {
     Texture group20;
 
     private Main main;
+    
+    public OptionMenu menu;
 
     public Menu(Main main){
         this.main = main;
-        
-        hold = new Golf(main);
+        menu = new OptionMenu(main);
+        hold = new PuttingSimulator(main.getCourse(), main.getEngine(), main, menu);
         hold.create();
+        //TODO:Golf becomes PuttingSimulator
         
         playButtonActive=new Texture("PlayButtonActive.jpg");
         playButtonInactive=new Texture("PlayButtonInactive.jpg");
@@ -59,38 +62,36 @@ public class Menu implements Screen {
 
         main.batch.begin();
       //  main.batch.draw(group20,0, Main.HEIGHT-BUTTON_HEIGHT,BUTTON_WIDTH, BUTTON_HEIGHT );
-        if(Gdx.input.getX()<Main.WIDTH/2-3*BUTTON_WIDTH/8+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
+        if(Gdx.input.getX()<Main.WIDTH/2-BUTTON_WIDTH/2+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
         && Gdx.input.getY()>Main.HEIGHT-(PLAY_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-PLAY_HEIGHT){
-            main.batch.draw(playButtonInactive,Main.WIDTH/2-3*BUTTON_WIDTH/8,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+            main.batch.draw(playButtonInactive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()){
-                main.play=true;
-                main.close = true;
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(hold);
+                main.setScreen(hold);
                 
             }
         } else
-            main.batch.draw(playButtonActive,Main.WIDTH/2-3*BUTTON_WIDTH/8,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+            main.batch.draw(playButtonActive,Main.WIDTH/2-BUTTON_WIDTH/2,PLAY_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
         if(Gdx.input.getX()<Main.WIDTH/2-3*BUTTON_WIDTH/8+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
                 && Gdx.input.getY()>Main.HEIGHT-(OPTION_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-OPTION_HEIGHT) {
-            main.batch.draw(optionButtonInactive, Main.WIDTH / 2 - 3 * BUTTON_WIDTH / 8, OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+            main.batch.draw(optionButtonInactive, Main.WIDTH / 2 - BUTTON_WIDTH / 2, OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {
-//                this.dispose();
-//                main.setScreen(null);
+                this.dispose();
+                main.setScreen(new OptionMenu(main));
                 //TODO options
             }
         }else
-            main.batch.draw(optionButtonActive,Main.WIDTH/2-3*BUTTON_WIDTH/8,OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
-        if(Gdx.input.getX()<Main.WIDTH/2-3*BUTTON_WIDTH/8+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-3*BUTTON_WIDTH/8
+            main.batch.draw(optionButtonActive,Main.WIDTH/2-BUTTON_WIDTH/2,OPTION_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+        if(Gdx.input.getX()<Main.WIDTH/2-BUTTON_WIDTH/2+BUTTON_WIDTH && Gdx.input.getX() > Main.WIDTH/2-BUTTON_WIDTH/2
                 && Gdx.input.getY()>Main.HEIGHT-(EXIT_HEIGHT+BUTTON_HEIGHT) && Gdx.input.getY()<Main.HEIGHT-EXIT_HEIGHT) {
-            main.batch.draw(exitButtonInactive, Main.WIDTH / 2 - 3 * BUTTON_WIDTH / 8, EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+            main.batch.draw(exitButtonInactive, Main.WIDTH / 2 - BUTTON_WIDTH / 2, EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
             if(Gdx.input.isTouched()) {
                 main.play = false;
                 main.close=true;
                 Gdx.app.exit();
             }
         }else
-            main.batch.draw(exitButtonActive,Main.WIDTH/2-3*BUTTON_WIDTH/8,EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+            main.batch.draw(exitButtonActive,Main.WIDTH/2-BUTTON_WIDTH/2,EXIT_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
 
         main.batch.end();
     }

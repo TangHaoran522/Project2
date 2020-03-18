@@ -149,7 +149,7 @@ public class EulerSolver implements PhysicsEngine {
 		}
 		
 		public float getVelX() {
-			return currentVelY;
+			return currentVelX;
 		}
 		
 		public float getVelY() {

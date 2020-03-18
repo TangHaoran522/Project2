@@ -19,7 +19,7 @@ public class PuttingCourse{
         this.start=start;
         this.friction =  0.131;
         this.maximumVelocity=10.0;
-        this.holeTolerance = 1.5;
+        this.holeTolerance = 0.5f;
     }
     
     public Function2d get_height(){

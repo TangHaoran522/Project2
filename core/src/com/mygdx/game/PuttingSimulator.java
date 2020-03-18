@@ -52,6 +52,8 @@ public class PuttingSimulator extends Game implements Screen{
     Model model;
     ModelInstance groundBall;
     ModelInstance ball;
+    ModelInstance flagPole;
+    ModelInstance flag;
 
     Main main;
     OptionMenu menu;
@@ -63,6 +65,8 @@ public class PuttingSimulator extends Game implements Screen{
     btCollisionObject groundObject;
     btCollisionObject ballObject;
     btCollisionObject wallObject;
+    
+    int count;
 
 
     public PuttingSimulator(PuttingCourse course, PhysicsEngine euler){
@@ -88,7 +92,6 @@ public class PuttingSimulator extends Game implements Screen{
     public void take_shot(Vector2d initial_ball_velocity){
     	eulerSolver.setVelX((float)initial_ball_velocity.getX());
     	eulerSolver.setVelY((float)initial_ball_velocity.getY());
-//    	eulerSolver.NextStep();
     }
 
     @Override
@@ -125,6 +128,12 @@ public class PuttingSimulator extends Game implements Screen{
         mb.node().id = "groundBalls";
         mb.part("sphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.GREEN)))
                 .sphere(0.5f, 0.5f, 0.5f, 5, 5);
+        mb.node().id = "flagpole";
+        mb.part("cylinder", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.GRAY)))
+        		.cylinder(0.5f, 5f, 0.5f, 10);
+        mb.node().id = "flag";
+        mb.part("box", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.RED)))
+        		.box(0.25f,1f,1f);
         model = mb.end();
 
         // create a modelinstance of the new model
@@ -149,7 +158,15 @@ public class PuttingSimulator extends Game implements Screen{
                 instances.add(groundBall);
             }
         }
-
+        
+        flagPole = new ModelInstance(model, "flagpole");
+        flagPole.transform.setToTranslation((float)course.get_flag_position().getX(), 2.5f + (float)course.get_height().evaluate(new Vector2d(course.get_flag_position().getX(), course.get_flag_position().getY())), (float)course.get_flag_position().getY());
+        instances.add(flagPole);
+        
+        flag = new ModelInstance(model, "flag");
+        flag.transform.setToTranslation((float)course.get_flag_position().getX(),(float)course.get_height().evaluate(new Vector2d(course.get_flag_position().getX(), course.get_flag_position().getY())) + 4.5f, (float)course.get_flag_position().getY()- .5f);
+        instances.add(flag);
+        
         // give the object a collision shape if you want it to have collision
         ballShape = new btSphereShape(0.5f);
         groundShape = new btBoxShape(new Vector3(2.5f, 0.5f, 2.5f));
@@ -177,25 +194,33 @@ public class PuttingSimulator extends Game implements Screen{
 
 
         take_shot(calcInit());
+        System.out.println(course.get_flag_position().getX() + " " + course.get_flag_position().getY());
+        
+        count = 0;
     }
 
     @Override
     public void render (float delta) {
 
         //TODO: add game over
-        if (((course.get_flag_position().getX() - course.get_hole_tolerance() <= this.ballPosition.getX()) &&
+        if (((((course.get_flag_position().getX() - course.get_hole_tolerance() <= this.ballPosition.getX()) &&
                 (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
-                && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance()))) {
+                && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance()))) && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 5*60) {
             main.setScreen(new Menu(main));
         }
         else {
+        	
+        	System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
 
         	eulerSolver.NextStep();
         	eulerSolver.setPosZ(eulerSolver.get_height(eulerSolver.getPosX(), eulerSolver.getPosY()));
 
 //            System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
 
+        	this.ballPosition.setX(eulerSolver.getPosX());
+        	this.ballPosition.setY(eulerSolver.getPosY());
+        	
             ball.transform.setToTranslation(eulerSolver.getPosX(), eulerSolver.getPosZ()+.5f, eulerSolver.getPosY());
             ballObject.setWorldTransform(ball.transform);
 
@@ -210,6 +235,13 @@ public class PuttingSimulator extends Game implements Screen{
             modelBatch.begin(cam);
             modelBatch.render(instances, environment);
             modelBatch.end();
+            
+            if (Math.abs(eulerSolver.getVelX()) <= 0.000001f &&  Math.abs(eulerSolver.getVelY()) <= 0.000001f) {
+            	count++;
+            }
+            else {
+            	count = 0;
+            }
 
         }
     }

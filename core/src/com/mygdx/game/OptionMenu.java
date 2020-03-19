@@ -48,6 +48,8 @@ public class OptionMenu implements Screen {
 
     Label loadMap;
     Label loadSpeed;
+    
+    Label mode2;
 
     TextField loadMapTF;
     TextField loadSpeedTF;
@@ -57,10 +59,19 @@ public class OptionMenu implements Screen {
     
     public String course;
     public float mu;
+    public float vMax;
+    public float goalRadius;
+    public Vector2d start;
+    public Vector2d finish;
+    
+    public int count;
 
     public OptionMenu(Main main){
         this.main = main;
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        
+        mode2 = new Label("enter file here for mode 2", skin);
+        mode2.setPosition(150, main.HEIGHT-540);
 
         shotLabelSpeed= new Label("Speed:", skin);
         shotLabelAngle = new Label("Angle:", skin);
@@ -142,6 +153,7 @@ public class OptionMenu implements Screen {
         stage.addActor(loadSpeed);
         stage.addActor(loadSpeedB);
         stage.addActor(loadSpeedTF);
+        stage.addActor(mode2);
         exitButtonActive=new Texture("ExitButtonActive.jpg");
         exitButtonInactive=new Texture("ExitButtonInactive.jpg");
         //TODO: make possible to edit settings and such...
@@ -182,16 +194,33 @@ public class OptionMenu implements Screen {
     }
 
     public void loadMap(String path){
-//        try{
-//            FileReader fr = new FileReader(path);
-//            //TODO: call courseShaper
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+    	
+    	if (path.charAt(path.length() - 1) == 't') {
+    	
+    	try{
+    		
+            FileReader fr = new FileReader("C:\\Users\\Jan Super\\git\\Project2\\core\\assets/" + path);
+            BufferedReader br = new BufferedReader (fr);
+            String line = br.readLine();
+            
+            path = line;
+            
+            fr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    	}
     
-    	String[] holdarray = new String[8];
+    	String[] holdarray = new String[14];
     	holdarray = path.split(" ");
     	mu = Float.parseFloat(holdarray[7]);
+    	vMax = Float.parseFloat(holdarray[8]);
+    	start = new Vector2d(Float.parseFloat(holdarray[9]), Float.parseFloat(holdarray[10]));
+    	finish = new Vector2d(Float.parseFloat(holdarray[11]), Float.parseFloat(holdarray[12]));
+    	goalRadius = Float.parseFloat(holdarray[13]);
+    	
     	path = holdarray[0];
     	for (int i = 1; i <= 6; i++) {
     		path += " ";
@@ -207,46 +236,63 @@ public class OptionMenu implements Screen {
     }
 
     public void loadSpeed(String path){
+    	count = main.count;
         try{
-            FileReader fr = new FileReader(path);
+            FileReader fr = new FileReader("C:\\Users\\Jan Super\\git\\Project2\\core\\assets/" + path);
             BufferedReader br = new BufferedReader(fr);
-            String line = br.readLine();
-            double x=0, y=0;
-            int ycounter = 0;
-            int xcounter =0;
-            ArrayList<Vector2d> speeds = new ArrayList<>();
-            while(line!= null){
-                String[] terms = line.split(",");
-                if(terms.length==2){
-                    if((terms[0].matches(decimalPattern)||terms[0].matches(naturalPattern))&&
-                            (terms[1].matches(decimalPattern)||terms[1].matches(naturalPattern)))
-                        speeds.add(new Vector2d(Double.parseDouble(terms[0]), Double.parseDouble(terms[1])));
-                }else
-                for(int i=0; i<terms.length;i++){
-                    if(terms[i].contains("x") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
-                            Pattern.matches(terms[i+1], naturalPattern))) {
-                        x=Double.parseDouble(terms[i+1]);
-                        xcounter ++;
-                    }
-                    else if(terms[i].contains("y") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
-                            Pattern.matches(terms[i+1], naturalPattern))) {
-                        y=Double.parseDouble(terms[i+1]);
-                        ycounter++;
-                    }
-                    else if(xcounter == ycounter && xcounter !=0){
-                        speeds.add(new Vector2d(x,y));
-                        xcounter = 0;
-                        ycounter = 0 ;
-                    }
-                }
-                line = br.readLine();
+            String line = "";
+            for (int i = 0; i <= count; i++) {
+            	line = br.readLine();
             }
+            count++;
+            
+            String[] holda = line.split(" ");
+            this.velocity = Float.parseFloat(holda[0]);
+            this.angle = Float.parseFloat(holda[1]);
+//            double x=0, y=0;
+//            int ycounter = 0;
+//            int xcounter =0;
+//            ArrayList<Vector2d> speeds = new ArrayList<>();
+//            while(line!= null){
+//                String[] terms = line.split(",");
+//                if(terms.length==2){
+//                    if((terms[0].matches(decimalPattern)||terms[0].matches(naturalPattern))&&
+//                            (terms[1].matches(decimalPattern)||terms[1].matches(naturalPattern)))
+//                        speeds.add(new Vector2d(Double.parseDouble(terms[0]), Double.parseDouble(terms[1])));
+//                }else
+//                for(int i=0; i<terms.length;i++){
+//                    if(terms[i].contains("x") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
+//                            Pattern.matches(terms[i+1], naturalPattern))) {
+//                        x=Double.parseDouble(terms[i+1]);
+//                        xcounter ++;
+//                    }
+//                    else if(terms[i].contains("y") && i+1 < terms.length && (Pattern.matches(terms[i+1], decimalPattern) ||
+//                            Pattern.matches(terms[i+1], naturalPattern))) {
+//                        y=Double.parseDouble(terms[i+1]);
+//                        ycounter++;
+//                    }
+//                    else if(xcounter == ycounter && xcounter !=0){
+//                        speeds.add(new Vector2d(x,y));
+//                        xcounter = 0;
+//                        ycounter = 0 ;
+//                    }
+//                }
+//                line = br.readLine();
+//            }
+            
+            
             fr.close();
+            main.count++;
+            Menu hold = new Menu(main);
+            hold.setOptionMenu(this);
+            main.setScreen(hold);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch(IOException e){
             e.printStackTrace();
         }
+        
+        
 
     }
 

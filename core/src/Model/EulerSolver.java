@@ -173,4 +173,8 @@ public class EulerSolver implements PhysicsEngine {
 			this.mu = mu;
 		}
 		
+		public void setVMax(float vMax) {
+			this.vmax = vMax;
+		}
+		
 	}

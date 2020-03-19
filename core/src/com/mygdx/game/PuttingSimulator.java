@@ -73,6 +73,7 @@ public class PuttingSimulator extends Game implements Screen{
     
     CourseShaper shape = new CourseShaper("1 sin x + y ^ 2");
 
+    
     int count;
 
 
@@ -215,8 +216,15 @@ public class PuttingSimulator extends Game implements Screen{
                 (this.ballPosition.getX() <= course.get_flag_position().getX()+ course.get_hole_tolerance()))
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
                 && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance())))
-                && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5)) || count == 2*60) {
-            main.setScreen(new Menu(main));
+                && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5))) {
+        	
+        	Menu holdMenu = new Menu(main);
+        	holdMenu.newLVL = true;
+            main.setScreen(holdMenu);
+        }
+        else if (count == 2*60) {
+        	Menu holdMenu = new Menu(main);
+        	main.setScreen(holdMenu);
         }
         else {
 
@@ -340,10 +348,14 @@ public class PuttingSimulator extends Game implements Screen{
     	this.menu = option;
     }
     
-    public void setCourse(String code, float mu) {
-    	this.shape = new CourseShaper(code);
+    public void setCourse(OptionMenu menu) {
+    	this.shape = new CourseShaper(menu.course);
     	this.course.set_Func2d(shape);
-    	eulerSolver = (PhysicsEngine)new EulerSolver(code);
-    	eulerSolver.setMu(mu);
+    	eulerSolver = (PhysicsEngine)new EulerSolver(menu.course);
+    	eulerSolver.setMu(menu.mu);
+    	eulerSolver.setVMax(menu.vMax);
+    	course.set_flag_positon(menu.finish);
+    	course.set_start_position(menu.start);
+    	course.set_hole_tolerance((double)menu.goalRadius);
     }
 }

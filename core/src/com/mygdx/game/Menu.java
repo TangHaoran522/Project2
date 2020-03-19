@@ -14,7 +14,7 @@ public class Menu implements Screen {
     private final int OPTION_HEIGHT = 200;
     private final int EXIT_HEIGHT = 75;
     
-    public boolean newLVL;
+    public boolean newLVL = false;
     
     public PuttingSimulator hold;
 
@@ -32,6 +32,8 @@ public class Menu implements Screen {
     private Main main;
     
     public OptionMenu menu;
+    
+    public int count;
 
     public Menu(Main main){
         this.main = main;
@@ -74,7 +76,7 @@ public class Menu implements Screen {
                 this.dispose();
                 
                 if (newLVL) {
-                	hold.setCourse(menu.course, menu.mu);
+                	hold.setCourse(menu);
                 	hold.create();
                 }
                 

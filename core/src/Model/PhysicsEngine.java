@@ -14,6 +14,7 @@ public interface PhysicsEngine {
 	public void setVelY(float d);
 	
 	public void setMu(float mu);
+	public void setVMax (float vMax);
 	
 	public float getPosX();
 	public float getPosY();

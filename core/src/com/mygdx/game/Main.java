@@ -16,6 +16,9 @@ public class Main extends Game {
 
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;
+    
+    public int count = 0;
+
 
 
     @Override

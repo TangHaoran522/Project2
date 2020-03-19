@@ -46,7 +46,7 @@ public class PuttingCourse{
 
         model = mb.end();
         ModelInstance groundBall = new ModelInstance(model, "groundBalls");
-        for (float j = -5f; j <= 5f; j += 0.3f) {
+        for (float j = -15f; j <= 15f; j += 0.3f) {
             for (float i = 0; i <= 199; i += 0.3f) {
                 groundBall = new ModelInstance(model, "groundBalls");
                 groundBall.transform.setToTranslation(i,(float)get_height().evaluate(new Vector2d(i,j))-.25f, j);
@@ -68,6 +68,14 @@ public class PuttingCourse{
     public Vector2d get_start_position(){
         return this.start;
     }
+    
+    public void set_start_position(Vector2d d) {
+    	this.start = d;
+    }
+    
+    public void set_flag_positon(Vector2d d) {
+    	this.flag = d;
+    }
 
     public double get_friction_coefficient(){
         return this.friction;
@@ -80,6 +88,10 @@ public class PuttingCourse{
 
     public double get_hole_tolerance(){
         return this.holeTolerance;
+    }
+    
+    public void set_hole_tolerance(double tol) {
+    	this.holeTolerance = tol;
     }
     
     public void set_Func2d(Function2d add) {

@@ -12,7 +12,7 @@ public class CourseShaper implements Function2d {
     public CourseShaper(String function2d){
 
         //TODO: okay seriously? a function that returns a function?
-    	
+    	help = new String[7];
     	this.help = function2d.split(" ");
     }
 
@@ -84,10 +84,10 @@ public class CourseShaper implements Function2d {
 		}
 		else {
 			if (help[0].equalsIgnoreCase("x")) {
-				holdx = (float)Math.pow(Double.parseDouble(help[0]), (double)x);
+				holdx = (float)Math.pow((double)x, Double.parseDouble(help[2]));
 			}
 			else {
-				holdx = (float)Math.pow((double)x, Double.parseDouble(help[0]));
+				holdx = (float)Math.pow(Double.parseDouble(help[0]), (double)x);
 			}
 		}
 		
@@ -155,9 +155,25 @@ public class CourseShaper implements Function2d {
 			}
 		}
 		
-		System.out.println(holdx + holdy);
+		System.out.println(help[3]);
 		
+		if (help[3].equals("+"))
 		return holdx + holdy;
+		else if (help[3].equals("-"))
+		return holdx - holdy;
+		else if (help[3].equals("*"))
+		return holdx * holdy;
+		else if (help[3].equals("/"))
+		return holdx * 1.0f/holdy;
+		else if (help[3].equals("^"))
+		return (float)Math.pow(holdx,  holdy);	
+		else if (help[3].equals("sin"))
+		return holdx*(float)Math.sin(holdy);
+		else
+		return holdx*(float)Math.cos(holdy);
+			
+			
+		
 		//return (float)Math.sin(x) + y*y;
 	}
 

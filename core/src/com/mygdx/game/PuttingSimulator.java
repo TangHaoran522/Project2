@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -45,6 +46,8 @@ public class PuttingSimulator extends Game implements Screen{
     private PhysicsEngine eulerSolver;
 
     private Vector2d ballPosition;
+
+    private Vector3 posTemp = new Vector3();
 
     PerspectiveCamera cam;
     CameraInputController camController;
@@ -155,14 +158,15 @@ public class PuttingSimulator extends Game implements Screen{
         instances.add(ball);
 
 
-        for (float j = -5f; j <= 5f; j += 0.3f) {
+      /*  for (float j = -5f; j <= 5f; j += 0.3f) {
             for (float i = 0; i <= 199; i += 0.3f) {
                 groundBall = new ModelInstance(model, "groundBalls");
                 groundBall.transform.setToTranslation(i - 50,(float)course.get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);
             }
-        }
-        
+        }*/
+        instances.addAll(course.getCourseModel(model));
+
         flagPole = new ModelInstance(model, "flagpole");
         flagPole.transform.setToTranslation((float)course.get_flag_position().getX(), 2.5f + (float)course.get_height().evaluate(new Vector2d(course.get_flag_position().getX(), course.get_flag_position().getY())), (float)course.get_flag_position().getY());
         instances.add(flagPole);
@@ -238,7 +242,7 @@ public class PuttingSimulator extends Game implements Screen{
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
             modelBatch.begin(cam);
-            modelBatch.render(instances, environment);
+            for(ModelInstance instance : instances) if(isVisible(cam, instance)) modelBatch.render(instance, environment);
             modelBatch.end();
             
             if (Math.abs(eulerSolver.getVelX()) <= 0.2f &&  Math.abs(eulerSolver.getVelY()) <= 0.2f) {
@@ -249,6 +253,11 @@ public class PuttingSimulator extends Game implements Screen{
             }
 
         }
+    }
+
+    public boolean isVisible(PerspectiveCamera cam, ModelInstance instance){
+        instance.transform.getTranslation(posTemp);
+        return cam.frustum.pointInFrustum(posTemp);
     }
 
     boolean checkCollision () {

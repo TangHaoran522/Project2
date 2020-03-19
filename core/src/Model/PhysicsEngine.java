@@ -13,6 +13,8 @@ public interface PhysicsEngine {
 	public void setVelX(float d);
 	public void setVelY(float d);
 	
+	public void setMu(float mu);
+	
 	public float getPosX();
 	public float getPosY();
 	public float getPosZ();

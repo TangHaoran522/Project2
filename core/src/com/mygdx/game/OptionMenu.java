@@ -56,6 +56,7 @@ public class OptionMenu implements Screen {
     TextButton loadSpeedB;
     
     public String course;
+    public float mu;
 
     public OptionMenu(Main main){
         this.main = main;
@@ -187,6 +188,15 @@ public class OptionMenu implements Screen {
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
+    
+    	String[] holdarray = new String[8];
+    	holdarray = path.split(" ");
+    	mu = Float.parseFloat(holdarray[7]);
+    	path = holdarray[0];
+    	for (int i = 1; i <= 6; i++) {
+    		path += " ";
+    		path += holdarray[i];
+    	}
     	
     	course = path;
     	Menu hold = new Menu(main);

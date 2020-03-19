@@ -74,7 +74,7 @@ public class Menu implements Screen {
                 this.dispose();
                 
                 if (newLVL) {
-                	hold.setCourse(menu.course);
+                	hold.setCourse(menu.course, menu.mu);
                 	hold.create();
                 }
                 

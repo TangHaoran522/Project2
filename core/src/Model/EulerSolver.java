@@ -168,4 +168,9 @@ public class EulerSolver implements PhysicsEngine {
 		public float getVelY() {
 			return currentVelY;
 		}
+		
+		public void setMu(float mu) {
+			this.mu = mu;
+		}
+		
 	}

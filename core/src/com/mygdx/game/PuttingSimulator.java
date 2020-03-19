@@ -340,9 +340,10 @@ public class PuttingSimulator extends Game implements Screen{
     	this.menu = option;
     }
     
-    public void setCourse(String code) {
+    public void setCourse(String code, float mu) {
     	this.shape = new CourseShaper(code);
     	this.course.set_Func2d(shape);
     	eulerSolver = (PhysicsEngine)new EulerSolver(code);
+    	eulerSolver.setMu(mu);
     }
 }

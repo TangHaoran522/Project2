@@ -5,15 +5,19 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.Main;
 
+import Model.EulerSolver;
+
 public class DesktopLauncher {
+	
+	
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.width=Main.WIDTH;
         config.height=Main.HEIGHT;
         config.resizable=false;
-		config.foregroundFPS = 60;
-		config.backgroundFPS = 60;
+		config.foregroundFPS = EulerSolver.fps;
+		config.backgroundFPS = EulerSolver.fps;
 		
 		Main hold = new Main();
 		

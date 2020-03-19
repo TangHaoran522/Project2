@@ -5,12 +5,12 @@ import com.mygdx.game.PuttingCourse;
 
 public class EulerSolver implements PhysicsEngine {
 
-	public  int fps = 60;
+	public static int fps = 165;
 	
 	String[] hold;
 	CourseShaper shape;
 	
-	public  float stepSize = 0.0000001f;
+	public  float stepSize = 0.00001f;
 		
 		//just storing the previous position to check when to stop loop
 
@@ -40,8 +40,8 @@ public class EulerSolver implements PhysicsEngine {
 		//the variables they require for the import, some not used yet:
 		public float g = 9.81f;
 		public float m = 45.93f;
-		public float mu = 0.5f;
-		public float vmax= 3.0f;
+		public float mu = 0.3f;
+		public float vmax= 15.0f;
 		public float tol = 0.02f;
 		
 		public float goalX = 0.0f;
@@ -117,16 +117,30 @@ public class EulerSolver implements PhysicsEngine {
 		 * Setting the next position, after a step, by multiplying the current velocity by the step size
 		 */
 		private void setNextPositions() {
-			nextPosX = currentPosX + currentVelX*(float)(1.0/fps);
-			nextPosY = currentPosY + currentVelY*(float)(1.0/fps);
+			nextPosX = currentPosX + currentVelX/fps;
+			nextPosY = currentPosY + currentVelY/fps;
 		}
 		
 		/**
 		 * Setting the new velocity after a step
 		 */
 		private void setNextVelocities() {
-			currentVelX = currentVelX + accelerationX*(float)(1.0/fps);
-			currentVelY = currentVelY + accelerationY*(float)(1.0/fps);
+			currentVelX = currentVelX + accelerationX/fps;
+			currentVelY = currentVelY + accelerationY/fps;
+			
+			if (currentVelX < -vmax) {
+				currentVelX = -vmax;
+			}
+			else if (currentVelX > vmax){
+				currentVelX = vmax;
+			}
+			
+			if (currentVelY < -vmax) {
+				currentVelY = -vmax;
+			}
+			else if (currentVelY > vmax){
+				currentVelY = vmax;
+			}
 		}
 		
 		public void setPosX(float d) {

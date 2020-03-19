@@ -10,7 +10,7 @@ public class EulerSolver implements PhysicsEngine {
 	String[] hold;
 	CourseShaper shape;
 	
-	public  float stepSize = (float)(1.0/fps);
+	public  float stepSize = 0.0000001f;
 		
 		//just storing the previous position to check when to stop loop
 
@@ -40,7 +40,7 @@ public class EulerSolver implements PhysicsEngine {
 		//the variables they require for the import, some not used yet:
 		public float g = 9.81f;
 		public float m = 45.93f;
-		public float mu = 0.9f;
+		public float mu = 0.5f;
 		public float vmax= 3.0f;
 		public float tol = 0.02f;
 		
@@ -85,7 +85,7 @@ public class EulerSolver implements PhysicsEngine {
 		 *Euler's method finding the slope
 		 */
 		private void setSlopes() {
-			float change =0.1f;
+			float change = stepSize;
 			if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)>get_height(currentPosX, currentPosY))){
 				DzDx = (get_height(currentPosX+change, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
 			}else if((currentPosX>nextPosX)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
@@ -117,16 +117,16 @@ public class EulerSolver implements PhysicsEngine {
 		 * Setting the next position, after a step, by multiplying the current velocity by the step size
 		 */
 		private void setNextPositions() {
-			nextPosX = currentPosX + currentVelX*stepSize;
-			nextPosY = currentPosY + currentVelY*stepSize;
+			nextPosX = currentPosX + currentVelX*(float)(1.0/fps);
+			nextPosY = currentPosY + currentVelY*(float)(1.0/fps);
 		}
 		
 		/**
 		 * Setting the new velocity after a step
 		 */
 		private void setNextVelocities() {
-			currentVelX = currentVelX + accelerationX*stepSize;
-			currentVelY = currentVelY + accelerationY*stepSize;
+			currentVelX = currentVelX + accelerationX*(float)(1.0/fps);
+			currentVelY = currentVelY + accelerationY*(float)(1.0/fps);
 		}
 		
 		public void setPosX(float d) {

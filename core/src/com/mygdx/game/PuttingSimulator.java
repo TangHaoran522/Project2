@@ -158,7 +158,7 @@ public class PuttingSimulator extends Game implements Screen{
         for (float j = -5f; j <= 5f; j += 0.3f) {
             for (float i = 0; i <= 199; i += 0.3f) {
                 groundBall = new ModelInstance(model, "groundBalls");
-                groundBall.transform.setToTranslation(i,(float)course.get_height().evaluate(new Vector2d(i,j))-.25f, j);
+                groundBall.transform.setToTranslation(i - 50,(float)course.get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);
             }
         }

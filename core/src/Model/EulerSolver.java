@@ -17,7 +17,7 @@ public class EulerSolver implements PhysicsEngine {
 		public float previousPosX;
 		public float previousPosY;
 
-		
+
 		public float currentPosX;
 		public float currentPosY;
 		public float currentPosZ;

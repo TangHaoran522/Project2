@@ -53,6 +53,12 @@ public class EulerSolver implements PhysicsEngine {
 		
 
 	//(Math.round(currentPosX*1000000)!=Math.round(previousPosX*1000000))||(Math.round(currentPosY*1000000))!=(Math.round(previousPosY*1000000))
+
+	/**
+	 * @param x Co-ordinate
+	 * @param y Co-ordinate
+	 * @return Height at Given x, y.
+	 */
 		public float get_height(float x, float y) {
 			return (float)shape.evaluate(new Vector2d(x,y));
 			//return (float)(Math.sin(x) + y*y);

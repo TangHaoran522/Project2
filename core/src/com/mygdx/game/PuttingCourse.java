@@ -47,7 +47,7 @@ public class PuttingCourse{
         model = mb.end();
         ModelInstance groundBall = new ModelInstance(model, "groundBalls");
         for (float j = -15f; j <= 15f; j += 0.3f) {
-            for (float i = 0; i <= 199; i += 0.3f) {
+            for (float i = -50; i <= 149; i += 0.3f) {
                 groundBall = new ModelInstance(model, "groundBalls");
                 groundBall.transform.setToTranslation(i,(float)get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);

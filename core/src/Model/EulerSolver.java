@@ -8,6 +8,6 @@ public class EulerSolver extends Solver{
     @Override
     public void setNextPositions(double solverStepSize) {
         currentPosX = currentPosX + solverStepSize*velocityX(solverStepSize);
-        currentPosY = currentPosY + solverStepSize*velocityX(solverStepSize);
+        currentPosY = currentPosY + solverStepSize*velocityY(solverStepSize);
     }
 }

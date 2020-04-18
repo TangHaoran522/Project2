@@ -9,7 +9,7 @@ public abstract class Solver implements PhysicsEngine{
     /**
      * the step size used for finding the partial derivative
      */
-    public  double stepSize = 0.00001;
+    public  double stepSize = 0.0001;
     /**
      * this is the time step that the system will be updating off of
      * 1/165s is every 0.00606060606060606060606060606061 seconds
@@ -20,7 +20,7 @@ public abstract class Solver implements PhysicsEngine{
      * Solver Step size
      * This is the step size that is changed for the set_step_size
      */
-    public double solverStepSize = 0.00001;
+    public double solverStepSize = 1.0/165.0;
 
 
     public double currentPosX;
@@ -37,14 +37,14 @@ public abstract class Solver implements PhysicsEngine{
     public double Fx;
     public double Fy;
 
-    public double g = 9.81f;
-    public double m = 45.93f;
-    public double mu = 0.3f;
-    public double vmax= 15.0f;
-    public double tol = 0.02f;
+    public double g = 9.81;
+    public double m = 45.93;
+    public double mu = 0.3;
+    public double vmax= 15.0;
+    public double tol = 0.02;
 
-    public double goalX = 0.0f;
-    public double goalY = 10.0f;
+    public double goalX = 0.0;
+    public double goalY = 10.0;
     CourseShaper shape;
 
     public Solver(String ab) {
@@ -64,10 +64,10 @@ public abstract class Solver implements PhysicsEngine{
     }
 
     public double slopeDzDx (double currentPosX, double currentPosY, double h ){
-       return  (get_height(currentPosX+h, currentPosY) - get_height(currentPosX, currentPosY))/h;
+       return  ((get_height(currentPosX+h, currentPosY) - get_height(currentPosX, currentPosY))/h);
     }
     public double slopeDzDy (double currentPosX, double currentPosY, double h ){
-        return (get_height(currentPosX, currentPosY+h) - get_height(currentPosX, currentPosY))/h;
+        return ((get_height(currentPosX, currentPosY+h) - get_height(currentPosX, currentPosY))/h);
     }
     @Override
     public void NextStep() {

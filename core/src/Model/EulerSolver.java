@@ -1,6 +1,7 @@
 package Model;
 
 import com.mygdx.game.CourseShaper;
+import com.mygdx.game.FunctionMaker;
 import com.mygdx.game.PuttingCourse;
 
 public class EulerSolver implements PhysicsEngine {
@@ -8,7 +9,7 @@ public class EulerSolver implements PhysicsEngine {
 	public static int fps = 165;
 	
 	String[] hold;
-	CourseShaper shape;
+	FunctionMaker shape;
 	
 	public  float stepSize = 0.00001f;
 		
@@ -48,7 +49,7 @@ public class EulerSolver implements PhysicsEngine {
 		public float goalY = 10.0f;
 		
 		public EulerSolver(String ab) {
-			shape = new CourseShaper(ab);
+			shape = new FunctionMaker(ab);
 		}
 		
 

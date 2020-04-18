@@ -1,9 +1,12 @@
 package com.mygdx.game;
 
+import Model.Function2d;
+import Model.Vector2d;
+
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class FunctionMaker{
+public class FunctionMaker implements Function2d {
 
     /**
      * FunctionMaker : makes a function that returns operations entered upon creation of Object
@@ -100,10 +103,11 @@ public class FunctionMaker{
         while(counter < this.function.length()){
             //IF NUMBER
             if(Pattern.matches(naturalPattern,this.function.substring(counter, counter+1))){
-                end=counter+1;
-                while(Pattern.matches(naturalPattern,this.function.substring(counter, end))||
+                end=counter;
+                while(end <= this.function.length()&&
+                        (Pattern.matches(naturalPattern,this.function.substring(counter, end))||
                         Pattern.matches(decimalPattern,this.function.substring(counter, end))||
-                        Pattern.matches(semiDecimalPattern,this.function.substring(counter, end)))
+                        Pattern.matches(semiDecimalPattern,this.function.substring(counter, end))))
                     end++;
                 arguments.add(this.function.substring(counter, end-1));
                 type.add("NUM");
@@ -166,12 +170,12 @@ public class FunctionMaker{
 
     /**
      * get the ouput of the function encoded upon creation of object
-     * @param x : x coordinate
-     * @param y : y coordinate
+     * @param vector2d : vector which contains x and y coordinates
      * @return z coordinate
      */
-    public double get_height(double x, double y){
+    public double evaluate(Vector2d vector2d){
         //new calc -> no functions was used yet and nothing is computed
+        double x = vector2d.getX(), y = vector2d.getY();
         funcounter=0;
         boolean[] comput = new boolean[arguments.size()];
         //find first argument
@@ -184,6 +188,34 @@ public class FunctionMaker{
         }
         return temp;
 
+    }
+
+    /**
+     * get the ouput of the function encoded upon creation of object
+     * @param x :  x and y coordinates
+     * @param y : x and y coordinates
+     * @return z coordinate
+     */
+    public double evaluate(double x, double y ){
+        //new calc -> no functions was used yet and nothing is computed
+
+        funcounter=0;
+        boolean[] comput = new boolean[arguments.size()];
+        //find first argument
+        double temp = helper(comput,0, x,y);
+        int index = next(comput);
+        //while there is something left to compute
+        while(index!=-1){
+            temp = helper(temp, comput, index,x,y);
+            index = next(comput);
+        }
+        return temp;
+
+    }
+
+    @Override
+    public Vector2d gradient(Vector2d p) {
+        return null;
     }
 
     /**
@@ -207,7 +239,7 @@ public class FunctionMaker{
         }else if(type.get(index).equals("SP")){
             if(type.get(index+1).equals("FUN")){
 
-                arg1=map.get(arguments.get(index)).compute(functions[funcounter++].get_height(x,y),1.0);
+                arg1=map.get(arguments.get(index)).compute(functions[funcounter++].evaluate(x,y),1.0);
                 computed[index]=true;
                 computed[index+1]=true;
 
@@ -224,7 +256,7 @@ public class FunctionMaker{
                 computed[index+1]=true;
             }else if(type.get(index+1).equals("SP")){
                 if(type.get(index+2).equals("FUN")){
-                    arg1=(-1)*map.get(arguments.get(index)).compute(functions[funcounter++].get_height(x,y),1.0);
+                    arg1=(-1)*map.get(arguments.get(index)).compute(functions[funcounter++].evaluate(x,y),1.0);
                     computed[index+1]=true;
                     computed[index+2]=true;
 
@@ -258,7 +290,7 @@ public class FunctionMaker{
                 computed[index]=true;
             }else if(type.get(index).equals("SP")){
                 if(type.get(index+1).equals("FUN")){
-                    arg=map.get(arguments.get(index)).compute(functions[funcounter++].get_height(x,y),1.0);
+                    arg=map.get(arguments.get(index)).compute(functions[funcounter++].evaluate(x,y),1.0);
                     computed[index]=true;
                     computed[index+1]=true;
 
@@ -275,14 +307,14 @@ public class FunctionMaker{
                     computed[index+1]=true;
                 }else if(type.get(index+1).equals("SP")){
                     if(type.get(index+2).equals("FUN")){
-                        arg=(-1)*map.get(arguments.get(index)).compute(functions[funcounter++].get_height(x,y),1.0);
+                        arg=(-1)*map.get(arguments.get(index)).compute(functions[funcounter++].evaluate(x,y),1.0);
                         computed[index+1]=true;
                         computed[index+2]=true;
 
                     }//else{ we have sinx }
                 }
             }else if(type.get(index).equals("FUN")){
-                arg = functions[funcounter++].get_height(x,y);
+                arg = functions[funcounter++].evaluate(x,y);
                 computed[index]=true;
             }///////////////////////COMPARE TO NEXT NON COMPUTED OP//////////////////////////////
 

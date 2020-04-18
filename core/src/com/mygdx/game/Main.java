@@ -1,8 +1,6 @@
 package com.mygdx.game;
 
-import Model.EulerSolver;
-import Model.PhysicsEngine;
-import Model.Vector2d;
+import Model.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

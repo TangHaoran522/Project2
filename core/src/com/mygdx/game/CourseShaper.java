@@ -18,9 +18,7 @@ public class CourseShaper implements Function2d {
 
     @Override
     public double evaluate(Vector2d p) {
-    	System.out.println(Arrays.toString(help));
-    	
-    	
+
     	float x = (float)p.getX();
     	float y = (float)p.getY();
     	
@@ -77,7 +75,6 @@ public class CourseShaper implements Function2d {
 					holdx = (float)(x * Math.sin(Float.parseFloat(help[2])));
 				}
 				else {
-					System.out.println("herex");
 					holdx = (float)(Math.sin(x) * Float.parseFloat(help[0]));
 				}
 			}
@@ -148,15 +145,13 @@ public class CourseShaper implements Function2d {
 		else {
 			if (help[4].equalsIgnoreCase("y")) {
 				holdy = (float)Math.pow((double)y, Double.parseDouble(help[6]));
-				System.out.println("herey");
+
 			}
 			else {
 				holdy = (float)Math.pow(Double.parseDouble(help[4]), (double)y);
 			}
 		}
-		
-		System.out.println(help[3]);
-		
+
 		if (help[3].equals("+"))
 		return holdx + holdy;
 		else if (help[3].equals("-"))

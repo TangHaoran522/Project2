@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.Main;
 
-import Model.EulerSolver;
+import Model.Solver;
 
 public class DesktopLauncher {
 	
@@ -16,8 +16,8 @@ public class DesktopLauncher {
 		config.width=Main.WIDTH;
         config.height=Main.HEIGHT;
         config.resizable=false;
-		config.foregroundFPS = EulerSolver.fps;
-		config.backgroundFPS = EulerSolver.fps;
+		config.foregroundFPS = (int)Solver.fps;
+		config.backgroundFPS =(int) Solver.fps;
 		
 		Main hold = new Main();
 		

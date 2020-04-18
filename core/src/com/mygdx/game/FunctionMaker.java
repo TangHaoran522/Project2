@@ -122,7 +122,6 @@ public class FunctionMaker{
                             arguments.removeLast();
                             arguments.add("(-1)");
                             type.add("MIN");
-                            System.out.println(end+ " " +function);
                             counter = end-1;
                         }else{
                             type.add("OP1");
@@ -167,7 +166,7 @@ public class FunctionMaker{
                 if(DEBUG) System.out.println("VAR");
                 counter++;
             }else{
-                System.out.println("WARNING ! There was a problem reading the formula");
+                //System.out.println("WARNING ! There was a problem reading the formula");
             }
             if(DEBUG&&counter<this.function.length()) System.out.print(function.charAt(counter));
         }
@@ -289,7 +288,7 @@ public class FunctionMaker{
                 }
             }
             /////////////////////////////////
-            System.out.println("\n"+index+" "+arguments.get(index-1)+" " +t+" "+arg);
+            //System.out.println("\n"+index+" "+arguments.get(index-1)+" " +t+" "+arg);
             return map.get(arguments.get(index-1)).compute(t, arg);
         }else if(index<computed.length){
             if(type.get(index).equals("VAR")){
@@ -300,26 +299,26 @@ public class FunctionMaker{
                 arg = Double.parseDouble(arguments.get(index-1));
                 computed[index]=true;
             }
-            System.out.println(t+" "+arg+" index:"+index );
+           // System.out.println(t+" "+arg+" index:"+index );
             return arg;
         }
-        System.out.println(index+" "+ t + " " + arg);
-        System.out.println("error here");
+       // System.out.println(index+" "+ t + " " + arg);
+        //System.out.println("error here");
         return t;
     }
 
     public static void main(String[] args){
         FunctionMaker f = new FunctionMaker("sin(x)+y");
-        for(String s : f.arguments) System.out.print(s);
-        System.out.println("HERE"+f.get_height(Math.PI/2,1));
+        //for(String s : f.arguments) System.out.print(s);
+        //System.out.println("HERE"+f.get_height(Math.PI/2,1));
         //System.out.println("HERE"+f.get_height(1,2));
     }
 
 
     public static boolean priority(String a, String b){
         if(a.startsWith("OP") && b.startsWith("OP")) return a.charAt(2)>=b.charAt(2);
-        System.out.println("bug in priority");
-        System.out.println("op1: "+a+" / op2: "+b);
+        //System.out.println("bug in priority");
+       // System.out.println("op1: "+a+" / op2: "+b);
         return false;
     }
     public static int next(boolean[] compute){

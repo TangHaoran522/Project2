@@ -217,7 +217,7 @@ public class PuttingSimulator extends Game implements Screen{
                 &&((course.get_flag_position().getY() - course.get_hole_tolerance() <= this.ballPosition.getY())
                 && (this.ballPosition.getY() <= course.get_flag_position().getY() + course.get_hole_tolerance())))
                 && (eulerSolver.getVelX()<= 5 && eulerSolver.getVelY()<= 5))) {
-        	
+           
         	Menu holdMenu = new Menu(main);
         	holdMenu.newLVL = true;
             main.setScreen(holdMenu);

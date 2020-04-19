@@ -37,6 +37,8 @@ public class EulerSolver implements PhysicsEngine {
 		
 		public float accelerationX;
 		public float accelerationY;
+
+		private Vector2d temp;
 		
 		//the variables they require for the import, some not used yet:
 		public float g = 9.81f;
@@ -86,7 +88,7 @@ public class EulerSolver implements PhysicsEngine {
 		 *Euler's method finding the slope
 		 */
 		private void setSlopes() {
-			float change = stepSize;
+	/*		float change = stepSize;
 			if((nextPosX>currentPosX)&&(get_height(nextPosX, currentPosY)>get_height(currentPosX, currentPosY))){
 				DzDx = (get_height(currentPosX+change, currentPosY) - get_height(currentPosX, currentPosY))/stepSize;
 			}else if((currentPosX>nextPosX)&&(get_height(currentPosX, currentPosY)>get_height(nextPosX, currentPosY))){
@@ -104,8 +106,10 @@ public class EulerSolver implements PhysicsEngine {
 				DzDy = -((get_height(currentPosX, currentPosY) - get_height(currentPosX, currentPosY+change))/stepSize);
 			}else{
 				DzDy = -((get_height(currentPosX, currentPosY-change) - get_height(currentPosX, currentPosY))/stepSize);
-			}
-
+			}*/
+			temp = shape.gradient(new Vector2d(currentPosX, currentPosY));
+			DzDx = (float)temp.getX();
+			DzDy= (float)temp.getY();
 		}
 		/**
 		 * Setting the acceleration using the formula provided

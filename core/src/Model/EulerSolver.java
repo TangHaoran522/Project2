@@ -9,5 +9,7 @@ public class EulerSolver extends Solver{
     public void setNextPositions(double solverStepSize) {
         currentPosX = currentPosX + solverStepSize*velocityX(solverStepSize);
         currentPosY = currentPosY + solverStepSize*velocityY(solverStepSize);
+        currentVelX = velocityX(solverStepSize);
+        currentVelY = velocityY(solverStepSize);
     }
 }

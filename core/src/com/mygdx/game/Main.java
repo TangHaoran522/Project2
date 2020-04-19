@@ -11,7 +11,6 @@ public class Main extends Game {
 	
     public SpriteBatch batch;
 
-
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;
     
@@ -22,7 +21,7 @@ public class Main extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        eulerSolver = new EulerSolver("1 sin x + y ^ 2");
+        eulerSolver = new RKSolver("1 sin x + y ^ 2");
         course = new PuttingCourse(new CourseShaper("1 sin x + y ^ 2"), new Vector2d(50,0), new Vector2d(0,0));
         this.setScreen(new Menu(this));
     }

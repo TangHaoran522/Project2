@@ -1,6 +1,4 @@
 package com.mygdx.game;
-
-import Model.Vector2d;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -36,9 +34,7 @@ import com.badlogic.gdx.physics.bullet.collision.btManifoldResult;
 import com.badlogic.gdx.physics.bullet.collision.btSphereBoxCollisionAlgorithm;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.utils.Array;
-
-import Model.EulerSolver;
-import Model.PhysicsEngine;
+import Model.*;
 
 
 public class PuttingSimulator extends Game implements Screen{
@@ -351,7 +347,7 @@ public class PuttingSimulator extends Game implements Screen{
     public void setCourse(OptionMenu menu) {
     	this.shape = new CourseShaper(menu.course);
     	this.course.set_Func2d(shape);
-    	eulerSolver = (PhysicsEngine)new EulerSolver(menu.course);
+    	eulerSolver = (PhysicsEngine)new RKSolver(menu.course);
     	eulerSolver.setMu(menu.mu);
     	eulerSolver.setVMax(menu.vMax);
     	course.set_flag_positon(menu.finish);

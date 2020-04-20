@@ -3,24 +3,24 @@ package Model;
 public interface PhysicsEngine {
 	
 	
-	public float get_height(float x, float y); 
+	public double get_height(double x, double y);
 	public void NextStep();
 	
-	public void setPosX(float d);
-	public void setPosY(float d);
-	public void setPosZ(float d);
+	public void setPosX(double d);
+	public void setPosY(double d);
+	public void setPosZ(double d);
 	
-	public void setVelX(float d);
-	public void setVelY(float d);
+	public void setVelX(double d);
+	public void setVelY(double d);
 	
-	public void setMu(float mu);
-	public void setVMax (float vMax);
+	public void setMu(double mu);
+	public void setVMax (double vMax);
 	
-	public float getPosX();
-	public float getPosY();
-	public float getPosZ();
+	public double getPosX();
+	public double getPosY();
+	public double getPosZ();
 	
-	public float getVelX();
-	public float getVelY();
+	public double getVelX();
+	public double getVelY();
 	
 }

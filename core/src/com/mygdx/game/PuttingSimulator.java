@@ -1,6 +1,4 @@
 package com.mygdx.game;
-
-import Model.Vector2d;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -36,9 +34,7 @@ import com.badlogic.gdx.physics.bullet.collision.btManifoldResult;
 import com.badlogic.gdx.physics.bullet.collision.btSphereBoxCollisionAlgorithm;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.utils.Array;
-
-import Model.EulerSolver;
-import Model.PhysicsEngine;
+import Model.*;
 
 
 public class PuttingSimulator extends Game implements Screen{
@@ -203,7 +199,7 @@ public class PuttingSimulator extends Game implements Screen{
 
 
         take_shot(calcInit());
-//        System.out.println(course.get_flag_position().getX() + " " + course.get_flag_position().getY());
+        //System.out.println(course.get_flag_position().getX() + " " + course.get_flag_position().getY());
         
         count = 0;
     }
@@ -228,7 +224,7 @@ public class PuttingSimulator extends Game implements Screen{
         }
         else {
 
-//        	System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
+        	//System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
 
         	eulerSolver.NextStep();
         	eulerSolver.setPosZ(eulerSolver.get_height(eulerSolver.getPosX(), eulerSolver.getPosY()));
@@ -238,10 +234,10 @@ public class PuttingSimulator extends Game implements Screen{
         	this.ballPosition.setX(eulerSolver.getPosX());
         	this.ballPosition.setY(eulerSolver.getPosY());
         	
-            ball.transform.setToTranslation(eulerSolver.getPosX(), eulerSolver.getPosZ()+.5f, eulerSolver.getPosY());
+            ball.transform.setToTranslation((float)eulerSolver.getPosX(), (float)eulerSolver.getPosZ()+.5f,(float) eulerSolver.getPosY());
             ballObject.setWorldTransform(ball.transform);
 
-            cam.position.set(eulerSolver.getPosX() - 5f, Math.max(5f,eulerSolver.getPosZ()+3f), eulerSolver.getPosY());
+            cam.position.set((float)eulerSolver.getPosX() - 5f, (float)Math.max(5f,eulerSolver.getPosZ()+3f),(float) eulerSolver.getPosY());
             cam.update();
             camController.update();
 
@@ -351,7 +347,7 @@ public class PuttingSimulator extends Game implements Screen{
     public void setCourse(OptionMenu menu) {
     	this.shape = new CourseShaper(menu.course);
     	this.course.set_Func2d(shape);
-    	eulerSolver = (PhysicsEngine)new EulerSolver(menu.course);
+    	eulerSolver = (PhysicsEngine)new RKSolver(menu.course);
     	eulerSolver.setMu(menu.mu);
     	eulerSolver.setVMax(menu.vMax);
     	course.set_flag_positon(menu.finish);

@@ -1,8 +1,6 @@
 package com.mygdx.game;
 
-import Model.EulerSolver;
-import Model.PhysicsEngine;
-import Model.Vector2d;
+import Model.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,7 +10,6 @@ public class Main extends Game {
 	private PhysicsEngine eulerSolver;
 	
     public SpriteBatch batch;
-
 
     public static int WIDTH = 1080;
     public static int HEIGHT = 720;
@@ -24,8 +21,8 @@ public class Main extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        eulerSolver = new EulerSolver("sin (x) + y ^ 2");
-        course = new PuttingCourse(new FunctionMaker("sin (x) + y ^ 2"), new Vector2d(50,0), new Vector2d(0,0));
+        eulerSolver = new RKSolver("1 sin x + y ^ 2");
+        course = new PuttingCourse(new CourseShaper("1 sin x + y ^ 2"), new Vector2d(50,0), new Vector2d(0,0));
         this.setScreen(new Menu(this));
     }
 

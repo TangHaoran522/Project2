@@ -30,7 +30,7 @@ public class OptionMenu implements Screen {
 
     private final int EXIT_HEIGHT = 75;
 
-    public float velocity = 20;
+    public float velocity = 15;
     public float angle = 15;
 
     Texture exitButtonActive;

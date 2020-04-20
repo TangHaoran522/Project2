@@ -25,6 +25,13 @@ public class PuttingCourse{
     private double maximumVelocity;
     private double holeTolerance;
 
+
+    /**
+     * constructor
+     * @param height function for the shape of the terrain
+     * @param flag position of the hole
+     * @param start position of the ball at the start of the game
+     */
     public PuttingCourse(Function2d height, Vector2d flag, Vector2d start){
         this.height=height;
         this.flag=flag;
@@ -34,6 +41,12 @@ public class PuttingCourse{
         this.holeTolerance = 0.5f;
     }
 //TODO: should we move everthing related to the course modeling etc here?
+
+    /**
+     * accessor get the instance model for the terrain
+     * @param model
+     * @return
+     */
     public Array<ModelInstance> getCourseModel(Model model){
 
         ModelBuilder mb = new ModelBuilder();
@@ -43,12 +56,22 @@ public class PuttingCourse{
 //        mb.manage(new Texture(Gdx.files.internal("Grass.jpg")));
         mb.part("parcel", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.GREEN)))
                 .sphere(0.5f, 0.5f, 0.5f, 5, 5);
+        mb.node().id = "waterBalls";
+//      mb.manage(new Texture(Gdx.files.internal("Grass.jpg")));
+      mb.part("parcel", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.BLUE)))
+              .sphere(0.5f, 0.5f, 0.5f, 5, 5);
 
         model = mb.end();
         ModelInstance groundBall = new ModelInstance(model, "groundBalls");
         for (float j = -15f; j <= 15f; j += 0.3f) {
             for (float i = -50; i <= 149; i += 0.3f) {
-                groundBall = new ModelInstance(model, "groundBalls");
+            	
+            	if ((float)get_height().evaluate(new Vector2d(i,j)) < 0) {
+            		groundBall = new ModelInstance(model, "waterBalls");
+            		groundBall.transform.setToTranslation(i,-.25f, j);
+            		instances.add(groundBall);
+            	}
+            	groundBall = new ModelInstance(model, "groundBalls");
                 groundBall.transform.setToTranslation(i,(float)get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);
             }
@@ -57,43 +80,82 @@ public class PuttingCourse{
         return instances;
     }
 
+    /**
+     * accessor
+     * @return get the function shaping the course
+     */
     public Function2d get_height(){
         return this.height;
     }
 
+    /**
+     * accessor
+     * @return flag position
+     */
     public Vector2d get_flag_position(){
         return this.flag;
     }
 
+    /**
+     * accessor
+     * @return get start position
+     */
     public Vector2d get_start_position(){
         return this.start;
     }
-    
+
+    /**
+     * mutator
+     * @param d define the start position
+     */
     public void set_start_position(Vector2d d) {
     	this.start = d;
     }
-    
+
+    /**
+     * mutator
+     * @param d define hole position
+     */
     public void set_flag_positon(Vector2d d) {
     	this.flag = d;
     }
 
+    /**
+     * accessor
+     * @return friction coefficient
+     */
     public double get_friction_coefficient(){
         return this.friction;
     }
 
+    /**
+     * accessor
+     * @return maximum speed authorized by this course
+     */
     public double get_maximum_velocity(){
         return this.maximumVelocity;
     }
 
-
+    /**
+     * accessor
+     * @return the radius of the hole / tolerance for the win
+     */
     public double get_hole_tolerance(){
         return this.holeTolerance;
     }
-    
+
+    /**
+     * mutator
+     * @param tol the radius of the hole / tolerance for the win
+     */
     public void set_hole_tolerance(double tol) {
     	this.holeTolerance = tol;
     }
-    
+
+    /**
+     * mutator
+     * @param add change the function shapping the course
+     */
     public void set_Func2d(Function2d add) {
     	this.height = add;
     }

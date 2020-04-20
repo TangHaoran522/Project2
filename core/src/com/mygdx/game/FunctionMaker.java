@@ -20,6 +20,7 @@ public class FunctionMaker{
     private static final String decimalPattern = "([0-9]*)\\.([0-9]*)";
     private static final String naturalPattern = "([0-9]*)";
     private static final String semiDecimalPattern = "([0-9]*)\\.";
+    private static final double step = 0.0000001;
 
     private FunctionMaker[] functions;
     private int funcounter;
@@ -187,6 +188,21 @@ public class FunctionMaker{
         return temp;
 
     }
+
+    @Override
+    public Vector2d gradient(Vector2d p) {
+        return new Vector2d((evaluate(p.getX()+step, p.getY()) - evaluate(p.getX()-step, p.getY()))/(2*step), (evaluate(p.getX(), p.getY()+step) - evaluate(p.getX(), p.getY()-step))/(2*step));
+    }
+
+
+    /**
+     * Helper to compute the output
+     * @param computed boolean array to keep track of done computations
+     * @param index to keep track of where we are in the computation
+     * @param x : x coordinate
+     * @param y : y coordinate
+     * @return first argument
+     */
     public double helper(boolean[] computed, int index, double x, double y){
         double arg1=0;
 

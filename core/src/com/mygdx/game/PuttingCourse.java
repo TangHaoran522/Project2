@@ -56,12 +56,22 @@ public class PuttingCourse{
 //        mb.manage(new Texture(Gdx.files.internal("Grass.jpg")));
         mb.part("parcel", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.GREEN)))
                 .sphere(0.5f, 0.5f, 0.5f, 5, 5);
+        mb.node().id = "waterBalls";
+//      mb.manage(new Texture(Gdx.files.internal("Grass.jpg")));
+      mb.part("parcel", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material(ColorAttribute.createDiffuse(Color.BLUE)))
+              .sphere(0.5f, 0.5f, 0.5f, 5, 5);
 
         model = mb.end();
         ModelInstance groundBall = new ModelInstance(model, "groundBalls");
         for (float j = -15f; j <= 15f; j += 0.3f) {
             for (float i = -50; i <= 149; i += 0.3f) {
-                groundBall = new ModelInstance(model, "groundBalls");
+            	
+            	if ((float)get_height().evaluate(new Vector2d(i,j)) < 0) {
+            		groundBall = new ModelInstance(model, "waterBalls");
+            		groundBall.transform.setToTranslation(i,-.25f, j);
+            		instances.add(groundBall);
+            	}
+            	groundBall = new ModelInstance(model, "groundBalls");
                 groundBall.transform.setToTranslation(i,(float)get_height().evaluate(new Vector2d(i,j))-.25f, j);
                 instances.add(groundBall);
             }

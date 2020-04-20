@@ -1,9 +1,7 @@
 package Model;
 
 import com.mygdx.game.CourseShaper;
-
 import static java.lang.Math.sqrt;
-
 
 public abstract class Solver implements PhysicsEngine{
     /**

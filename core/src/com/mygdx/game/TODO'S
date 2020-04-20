@@ -1,0 +1,13 @@
+UI improvements
+
+-Only having the file reader and shot readers in the options menu
+-on screen options in game
+(connections between the on screen buttons parsing through information to the phsyics engine)
+-make the on screen options only visible when the ball is standing still
+
+- onscreen ui features
+- Slider/textbox/whatever to fill in the velocity. what the velocity is doesnt matter the physics engine takes care of the extreme values
+- slider/textbox/whatever to fill in the angle to take a shot, this should be a value between 0 and 360
+- button to take the shot
+- shot count // still have to be added
+- par count // still have to be added

@@ -1,6 +1,8 @@
 package Model;
 
 import com.mygdx.game.CourseShaper;
+import com.mygdx.game.FunctionMaker;
+
 import static java.lang.Math.sqrt;
 
 public abstract class Solver implements PhysicsEngine{
@@ -43,10 +45,10 @@ public abstract class Solver implements PhysicsEngine{
 
     public double goalX = 0.0;
     public double goalY = 10.0;
-    CourseShaper shape;
+    Function2d shape;
 
     public Solver(String ab) {
-        shape = new CourseShaper(ab);
+        shape = new FunctionMaker(ab);
     }
 
     /**

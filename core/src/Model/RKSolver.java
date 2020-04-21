@@ -8,6 +8,25 @@ public class RKSolver extends Solver {
         super(ab);
     }
 
+    // variable instances to change in the core Solver?
+    Vector2d position;
+    Vector2d velocity;
+
+
+    @Override
+    public void NextStep() {
+
+        DzDx = slopeDzDx(currentPosX, currentPosY, stepSize);
+        DzDy = slopeDzDy(currentPosX, currentPosY, stepSize);
+        setForce();
+        setNextPositions(solverStepSize);
+        currentPosZ = get_height(currentPosX,currentPosY);
+
+        this.position = getNextPositions(this.position, this.velocity, this.solverStepSize);
+        this.velocity = computeSpeeds(this.position,this.velocity, this.solverStepSize);
+
+    }
+
     /**
      * Compute the position of the ball at next time step with RungeKutta method
      * @param positions current coordinates of the ball
@@ -61,7 +80,30 @@ public class RKSolver extends Solver {
          -(g*slopes.getY()) - (mu*g*(velY/ sqrtSpeeds)));
     }
 
+    public void setPosition(Vector2d position){
+        this.position = position;
+    }
+
+    @Override
+    public double getVelX(){
+        return this.velocity.getX();
+    }
+    @Override
+    public double getVelY(){
+        return this.velocity.getY();
+    }
+    @Override
+    public double getPosZ(){
+        return this.shape.evaluate(position);
+    }
 
 
+    public Vector2d getPosition(){
+        return this.position;
+    }
+
+    public void setVelocity(Vector2d v){
+        this.velocity=v;
+    }
 
 }

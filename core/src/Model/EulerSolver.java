@@ -12,4 +12,19 @@ public class EulerSolver extends Solver{
         currentVelX = velocityX(solverStepSize);
         currentVelY = velocityY(solverStepSize);
     }
+
+    @Override
+    public void setPosition(Vector2d v) {
+
+    }
+
+    @Override
+    public void setVelocity(Vector2d v) {
+
+    }
+
+    @Override
+    public Vector2d getPosition() {
+        return null;
+    }
 }

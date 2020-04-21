@@ -1,7 +1,7 @@
 package Bot;
 
+import Model.PhysicsEngine;
 import Model.Vector2d;
-import com.mygdx.game.PhysicsEngine;
 import com.mygdx.game.PuttingCourse;
 
 import java.util.LinkedList;

@@ -26,4 +26,6 @@ public class Vector2d {
     public void setY(double d){
         this.y=d;
     }
+    public Vector2d cloneAndAdd(double a, double b){return new Vector2d(this.x+a, this.y+b);}
+
 }

@@ -4,7 +4,7 @@ public interface PhysicsEngine {
 	
 	
 	public double get_height(double x, double y);
-	public void NextStep();
+	public void nextStep();
 	
 	public void setPosX(double d);
 	public void setPosY(double d);// => change to..

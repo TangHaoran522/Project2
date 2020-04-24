@@ -223,7 +223,7 @@ public class PuttingSimulator extends Game implements Screen{
 
         	//System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
 
-        	physicsEngine.NextStep();
+        	physicsEngine.nextStep();
         	physicsEngine.setPosZ(physicsEngine.get_height(physicsEngine.getPosX(), physicsEngine.getPosY()));
 
 //            System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
@@ -346,7 +346,7 @@ public class PuttingSimulator extends Game implements Screen{
     public void setCourse(OptionMenu menu) {
     	this.shape = new CourseShaper(menu.course);
     	this.course.set_Func2d(shape);
-    	physicsEngine = (PhysicsEngine)new RKSolver(menu.course);
+    	physicsEngine = (PhysicsEngine)new VerletSolver(menu.course);
     	physicsEngine.setMu(menu.mu);
     	physicsEngine.setVMax(menu.vMax);
     	course.set_flag_positon(menu.finish);

@@ -45,7 +45,7 @@ public abstract class Solver implements PhysicsEngine{
 
     public double goalX = 0.0;
     public double goalY = 10.0;
-    Function2d shape;
+    protected static Function2d shape;
 
     public Solver(String ab) {
         shape = new FunctionMaker(ab);
@@ -62,7 +62,7 @@ public abstract class Solver implements PhysicsEngine{
     public double get_height(double x, double y){
         return shape.evaluate(new Vector2d(x,y));
     }
-
+    //TODO: remove slopes and use the shape.gradient() method
     public double slopeDzDx (double currentPosX, double currentPosY, double h ){
        return  ((get_height(currentPosX+h, currentPosY) - get_height(currentPosX, currentPosY))/h);
     }
@@ -70,7 +70,7 @@ public abstract class Solver implements PhysicsEngine{
         return ((get_height(currentPosX, currentPosY+h) - get_height(currentPosX, currentPosY))/h);
     }
     @Override
-    public void NextStep() {
+    public void nextStep() {
 
         DzDx = slopeDzDx(currentPosX, currentPosY, stepSize);
         DzDy = slopeDzDy(currentPosX, currentPosY, stepSize);
@@ -83,6 +83,13 @@ public abstract class Solver implements PhysicsEngine{
     public void setForce() {
         Fx = -(g*DzDx) - (mu*g*(currentVelX/(sqrt((currentVelX*currentVelX) + (currentVelY*currentVelY)))));
         Fy = -(g*DzDy) - (mu*g*(currentVelY/(sqrt((currentVelX*currentVelX) + (currentVelY*currentVelY)))));
+    }
+    protected Vector2d  getNextAcceleration (Vector2d position, Vector2d velocity){
+        Vector2d slopes = this.shape.gradient(position);
+        double velY = velocity.getY(), velX = velocity.getX();
+        double sqrtSpeeds = sqrt((velX * velX) + (velY * velY));
+        return new Vector2d( -(g*slopes.getX()) - (mu*g*(velX/ sqrtSpeeds)),
+                -(g*slopes.getY()) - (mu*g*(velY/ sqrtSpeeds)));
     }
 
     public double velocityX(double h){

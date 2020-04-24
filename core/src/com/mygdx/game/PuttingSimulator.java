@@ -224,7 +224,7 @@ public class PuttingSimulator extends Game implements Screen{
         	//System.out.println(eulerSolver.getVelX() + " " + eulerSolver.getVelY());
 
         	physicsEngine.nextStep();
-        	physicsEngine.setPosZ(physicsEngine.get_height(physicsEngine.getPosX(), physicsEngine.getPosY()));
+        	physicsEngine.setPosZ(physicsEngine.get_height(physicsEngine.getPosition().getX(), physicsEngine.getPosition().getY()));
 
 //            System.out.println(golfBall.currentPosZ + " " + (golfBall.currentPosZ - golfBall.get_height(golfBall.currentPosX+golfBall.currentVelX, golfBall.currentPosY+golfBall.currentVelY)));
 

@@ -30,5 +30,6 @@ public class Vector2d {
     public Vector2d clone(){
         return new Vector2d(this.x, this.y);
     }
+    public void add(double x, double y){this.x+=x;this.y+=y;}
 
 }

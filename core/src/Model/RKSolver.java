@@ -63,7 +63,7 @@ public class RKSolver extends Solver {
         acceleration = getNextAcceleration(positions,velocity.cloneAndAdd(kx2/2, ky2/2));
         double kx3=step*acceleration.getX(), ky3 = step*acceleration.getY();
         acceleration = getNextAcceleration(positions,velocity.cloneAndAdd(kx3, ky3));
-        double kx4=step*acceleration.getX(),ky4 = step*acceleration.getX();
+        double kx4=step*acceleration.getX(),ky4 = step*acceleration.getY();
         return new Vector2d(velocity.getX()+(kx1+2*kx2+2*kx3+kx4)/6,velocity.getY()+ (ky1+2*ky2+2*ky3+ky4)/6);
     }
 

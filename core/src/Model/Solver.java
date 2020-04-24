@@ -72,9 +72,9 @@ public abstract class Solver implements PhysicsEngine{
     @Override
     public void nextStep() {
 
-        DzDx = slopeDzDx(currentPosX, currentPosY, stepSize);
-        DzDy = slopeDzDy(currentPosX, currentPosY, stepSize);
-        setForce();
+//        DzDx = slopeDzDx(currentPosX, currentPosY, stepSize);
+//        DzDy = slopeDzDy(currentPosX, currentPosY, stepSize);
+//        setForce();
         setNextPositions(solverStepSize);
         currentPosZ = get_height(currentPosX,currentPosY);
 
@@ -88,8 +88,8 @@ public abstract class Solver implements PhysicsEngine{
         Vector2d slopes = this.shape.gradient(position);
         double velY = velocity.getY(), velX = velocity.getX();
         double sqrtSpeeds = sqrt((velX * velX) + (velY * velY));
-        return new Vector2d( -(g*slopes.getX()) - (mu*g*(velX/ sqrtSpeeds)),
-                -(g*slopes.getY()) - (mu*g*(velY/ sqrtSpeeds)));
+        return new Vector2d( (-1)*(g*slopes.getX()) - (mu*g*(velX/ sqrtSpeeds)),
+                (-1)*(g*slopes.getY()) - (mu*g*(velY/ sqrtSpeeds)));
     }
 
     public double velocityX(double h){
@@ -159,4 +159,5 @@ public abstract class Solver implements PhysicsEngine{
     public double getVelY() {
         return currentVelY;
     }
+
 }
